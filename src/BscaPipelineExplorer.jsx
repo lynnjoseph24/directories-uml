@@ -33,8 +33,9 @@ export default function BscaPipelineExplorer() {
   }, [layerFilter, search]);
 
   const tablesByPhase = useMemo(() => {
-    const order = ['master_load', 'tenant_setup', 'pipeline_run'];
-    const map = { master_load: [], tenant_setup: [], pipeline_run: [] };
+    const order = Object.keys(TABLE_LAYERS);
+    const map = {};
+    for (const key of order) map[key] = [];
     for (const row of filteredTables) {
       if (map[row.layer]) map[row.layer].push(row);
     }
@@ -51,7 +52,7 @@ export default function BscaPipelineExplorer() {
           <h1 className="bsca-explorer-title">BSCA pipeline tables</h1>
           <p className="bsca-explorer-sub">
             Tables are grouped as <strong>Master table load</strong> → <strong>Tenant setup</strong> →{' '}
-            <strong>Pipeline run</strong>, in the order data is affected. Metadata: <code>designTables.js</code>{' '}
+            <strong>Pipeline run</strong> → <strong>Admin / RBAC</strong> → <strong>UI / Frontend</strong>, in the order data is affected. Metadata: <code>designTables.js</code>{' '}
             ({TABLES.length} tables). Sample: <strong>100</strong> <code>staging_record</code> /{' '}
             <code>cass_result</code> rows; <strong>25</strong> <code>provider_record</code> rows.
           </p>
