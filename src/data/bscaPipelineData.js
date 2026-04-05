@@ -59,6 +59,15 @@ export const BSCA_IDS = {
   planYear2026: bscaUuid(2),
   planYear2025: bscaUuid(3),
   productImapd: bscaUuid(10),
+  productImapdPpo: bscaUuid(11),
+  productDimapd: bscaUuid(12),
+  productGmapd: bscaUuid(13),
+  productDualsLa: bscaUuid(14),
+  productDualsSd: bscaUuid(15),
+  productMdCalLa: bscaUuid(16),
+  productMdCalSd: bscaUuid(17),
+  productAccu: bscaUuid(18),
+  productVision: bscaUuid(19),
   ppyImapd2026: bscaUuid(20),
   fileSource: bscaUuid(70),
   fileImport: bscaUuid(96),
@@ -74,11 +83,31 @@ export const BSCA_IDS = {
   ingestionConfig: bscaUuid(55),
   fileEvent: bscaUuid(100),
   intakeJob: bscaUuid(101),
-  /** ISO 639 registry rows (iso_language_standard.id). */
+  /** ISO 639 registry rows (iso_language_standard.id) — all 12 CA threshold languages. */
   isoEn: bscaUuid(600),
   isoEs: bscaUuid(601),
+  isoAr: bscaUuid(602),
+  isoHy: bscaUuid(603),
+  isoFa: bscaUuid(604),
+  isoKm: bscaUuid(605),
+  isoKo: bscaUuid(606),
+  isoRu: bscaUuid(607),
+  isoTl: bscaUuid(608),
+  isoZhHans: bscaUuid(609),
+  isoZhHant: bscaUuid(613),
+  isoVi: bscaUuid(614),
   langEn: bscaUuid(610),
   langEs: bscaUuid(611),
+  langAr: bscaUuid(620),
+  langHy: bscaUuid(621),
+  langFa: bscaUuid(622),
+  langKm: bscaUuid(623),
+  langKo: bscaUuid(624),
+  langRu: bscaUuid(625),
+  langTl: bscaUuid(626),
+  langZhHans: bscaUuid(627),
+  langZhHant: bscaUuid(628),
+  langVi: bscaUuid(629),
   specialtyPcp: bscaUuid(1610),
   specialtyCard: bscaUuid(1611),
   networkChoice: bscaUuid(1620),
@@ -102,6 +131,36 @@ export const BSCA_IDS = {
   roleAnalyst: bscaUuid(8014),
   roleViewer: bscaUuid(8015),
   roleApiConsumer: bscaUuid(8016),
+  // Archival Service
+  archivalJobHotToWarm: bscaUuid(9000),
+  archivalJobWarmToCold: bscaUuid(9001),
+  archivalJobSoftPurge: bscaUuid(9002),
+  archivalJobPartCreate: bscaUuid(9003),
+  archivalJobIntegrity: bscaUuid(9004),
+  archivalJobCompliance: bscaUuid(9005),
+  archivalScheduleHotToWarm: bscaUuid(9010),
+  archivalScheduleWarmToCold: bscaUuid(9011),
+  archivalScheduleSoftPurge: bscaUuid(9012),
+  archivalScheduleHardPurge: bscaUuid(9013),
+  archivalSchedulePartCreate: bscaUuid(9014),
+  archivalSchedulePartStats: bscaUuid(9015),
+  archivalScheduleCassCleanup: bscaUuid(9016),
+  archivalScheduleLockCleanup: bscaUuid(9017),
+  archivalScheduleRestoreCleanup: bscaUuid(9018),
+  archivalScheduleIntegrity: bscaUuid(9019),
+  archivalScheduleCompliance: bscaUuid(9020),
+  archivalScheduleGlacier: bscaUuid(9021),
+  snapshotStagingJan: bscaUuid(9100),
+  snapshotStagingFeb: bscaUuid(9101),
+  snapshotStagingMar: bscaUuid(9102),
+  snapshotAuditJan: bscaUuid(9103),
+  snapshotColdQ12024: bscaUuid(9110),
+  legalHoldOig: bscaUuid(9200),
+  restoreReq1: bscaUuid(9300),
+  complianceReport202603: bscaUuid(9400),
+  integrityCheck1: bscaUuid(9500),
+  integrityCheck2: bscaUuid(9501),
+  integrityCheck3: bscaUuid(9502),
 };
 
 function rawDataForRow(i) {
@@ -279,14 +338,16 @@ const GENERATORS = {
     },
   ],
   product: () => [
-    {
-      id: BSCA_IDS.productImapd,
-      tenant_id: BSCA_IDS.tenant,
-      lob_code: 'IMAPDHMO',
-      name: 'Individual Medicare Advantage PDP HMO',
-      product_type: 'Medicare',
-      status: 'active',
-    },
+    { id: BSCA_IDS.productImapd,    tenant_id: BSCA_IDS.tenant, lob_code: 'IMAPDHMO',   name: 'Individual Medicare Advantage PDP HMO',  product_type: 'Medicare',   status: 'active' },
+    { id: BSCA_IDS.productImapdPpo, tenant_id: BSCA_IDS.tenant, lob_code: 'IMAPDPPO',   name: 'Individual Medicare Advantage PDP PPO',  product_type: 'Medicare',   status: 'active' },
+    { id: BSCA_IDS.productDimapd,   tenant_id: BSCA_IDS.tenant, lob_code: 'DIMAPDHMO',  name: 'Dual Individual MAPD HMO (D-SNP)',       product_type: 'Medicare',   status: 'active' },
+    { id: BSCA_IDS.productGmapd,    tenant_id: BSCA_IDS.tenant, lob_code: 'GMAPDPPO',   name: 'Group Medicare Advantage PDP PPO',       product_type: 'Medicare',   status: 'active' },
+    { id: BSCA_IDS.productDualsLa,  tenant_id: BSCA_IDS.tenant, lob_code: 'Duals_LA',   name: 'Dual-Eligible Los Angeles County',       product_type: 'Medicare',   status: 'active' },
+    { id: BSCA_IDS.productDualsSd,  tenant_id: BSCA_IDS.tenant, lob_code: 'Duals_SD',   name: 'Dual-Eligible San Diego County',         product_type: 'Medicare',   status: 'active' },
+    { id: BSCA_IDS.productMdCalLa,  tenant_id: BSCA_IDS.tenant, lob_code: 'MdCal_LA',   name: 'Medi-Cal Los Angeles County',            product_type: 'Medi-Cal',   status: 'active' },
+    { id: BSCA_IDS.productMdCalSd,  tenant_id: BSCA_IDS.tenant, lob_code: 'MdCal_SD',   name: 'Medi-Cal San Diego County',              product_type: 'Medi-Cal',   status: 'active' },
+    { id: BSCA_IDS.productAccu,     tenant_id: BSCA_IDS.tenant, lob_code: 'ACCU',       name: 'Acupuncture & Chiropractic',             product_type: 'Ancillary',  status: 'active' },
+    { id: BSCA_IDS.productVision,   tenant_id: BSCA_IDS.tenant, lob_code: 'VISION',     name: 'Vision Services',                        product_type: 'Ancillary',  status: 'active' },
   ],
   pipeline_run: () => [
     {
@@ -318,6 +379,7 @@ const GENERATORS = {
       { type: 'CASS', label: 'CASS (Address Standardization)', ord: 4, id: BSCA_IDS.stCass, retries: 5 },
       { type: 'RULES', label: 'Rules & Matching (CKDTree)', ord: 5, id: bscaUuid(905), retries: 2 },
       { type: 'RECON', label: 'Reconciliation & Quality', ord: 6, id: BSCA_IDS.stRecon, retries: 2 },
+      { type: 'OUTPUT', label: 'Output (Directory API & Precomp)', ord: 7, id: bscaUuid(906), retries: 1 },
     ].map((s) => ({
       id: s.id,
       flow_id: BSCA_IDS.refreshFlow,
@@ -366,11 +428,87 @@ const GENERATORS = {
       flow_id: BSCA_IDS.refreshFlow,
       flow_version: 12,
       status: 'running',
+      detailed_status: 'cass_geocoding',
       trigger_type: 'scheduled',
+      failure_reason: null,
+      failure_station: null,
+      failure_component: null,
       started_at: '2026-04-04T10:00:00Z',
       completed_at: null,
     },
   ],
+  run_status: () => {
+    const s = (uuid, code, cat, station, label, desc, terminal, error, ord) => ({
+      id: bscaUuid(uuid), code, category: cat, station, label, description: desc,
+      is_terminal: terminal, is_error: error, ordinal: ord,
+    });
+    return [
+      // ── Cross-station statuses ──
+      s(6001, 'pending',                     'pending',      null,        'Pending',                          'Run created, waiting for execution slot',                                                false, false, 1),
+      s(6002, 'queued',                      'pending',      null,        'Queued',                           'Run is in the execution queue behind other runs',                                        false, false, 2),
+      s(6003, 'lock_acquired',               'running',      null,        'Lock Acquired',                    'Pipeline lock obtained, execution starting',                                             false, false, 3),
+      s(6004, 'lock_failed',                 'failed',       null,        'Lock Failed',                      'Could not acquire pipeline lock — another run is active for this product',                true,  true,  4),
+
+      // ── Intake station ──
+      s(6010, 'intake_started',              'running',      'intake',    'Intake Started',                   'File watcher detected file, intake job created',                                         false, false, 10),
+      s(6011, 'intake_file_moving',          'running',      'intake',    'File Moving',                      'Copying file from source to app directory',                                              false, false, 11),
+      s(6012, 'intake_dedup_checking',       'running',      'intake',    'Dedup Checking',                   'Running name-based and hash-based deduplication',                                        false, false, 12),
+      s(6013, 'intake_corruption_checking',  'running',      'intake',    'Corruption Checking',              'Sampling rows to verify file readability and format',                                    false, false, 13),
+      s(6014, 'intake_parsing',              'running',      'intake',    'Parsing',                          'Streaming file rows into raw_record table',                                              false, false, 14),
+      s(6015, 'intake_completed',            'running',      'intake',    'Intake Completed',                 'File successfully parsed and raw_record rows written',                                   false, false, 15),
+      s(6016, 'intake_failed_corrupt',       'failed',       'intake',    'Failed — Corrupt File',            'File failed corruption check (truncated, encoding error, binary content)',                true,  true,  16),
+      s(6017, 'intake_failed_duplicate',     'quarantined',  'intake',    'Quarantined — Duplicate File',     'File is an exact or content duplicate of a prior import',                                true,  true,  17),
+      s(6018, 'intake_failed_size',          'quarantined',  'intake',    'Quarantined — Size Limit',         'File exceeds configured maximum size or is suspiciously small',                          true,  true,  18),
+
+      // ── Ingestion station ──
+      s(6020, 'ingestion_started',           'running',      'ingestion', 'Ingestion Started',                'Raw records being mapped to canonical schema',                                           false, false, 20),
+      s(6021, 'ingestion_mapping',           'running',      'ingestion', 'Column Mapping',                   'Mapping source columns to canonical fields via source_field_mapping',                    false, false, 21),
+      s(6022, 'ingestion_null_profiling',    'running',      'ingestion', 'NULL Profiling',                   'Computing NULL rates per field and comparing to thresholds',                             false, false, 22),
+      s(6023, 'ingestion_completed',         'running',      'ingestion', 'Ingestion Completed',              'All raw records mapped to staging_record at stage=mapped',                               false, false, 23),
+      s(6024, 'ingestion_failed_schema',     'failed',       'ingestion', 'Failed — Schema Mismatch',        'Column count or names do not match expected schema',                                    true,  true,  24),
+      s(6025, 'ingestion_failed_stopper',    'quarantined',  'ingestion', 'Quarantined — NULL Threshold',     'Critical field NULL rate exceeded stopper threshold (e.g. PROV_NPI > 5%)',              true,  true,  25),
+
+      // ── Cleansing station ──
+      s(6030, 'cleansing_started',           'running',      'cleansing', 'Cleansing Started',                'UDF pipeline executing against staging_record at stage=mapped',                         false, false, 30),
+      s(6031, 'cleansing_in_progress',       'running',      'cleansing', 'Cleansing In Progress',            'UDF transforms running sequentially per configured pipeline',                           false, false, 31),
+      s(6032, 'cleansing_completed',         'running',      'cleansing', 'Cleansing Completed',              'All records advanced to stage=cleansed',                                                 false, false, 32),
+      s(6033, 'cleansing_failed_dlq',        'failed',       'cleansing', 'Failed — Too Many DLQ Records',    'Dead letter queue exceeded configured threshold for problematic records',                true,  true,  33),
+
+      // ── CASS station ──
+      s(6040, 'cass_started',                'running',      'cass',      'CASS Started',                     'Address standardization and geocoding via BCC SDK',                                     false, false, 40),
+      s(6041, 'cass_geocoding',              'running',      'cass',      'Geocoding',                        'BCC batches processing — standardizing addresses and computing lat/lon',                 false, false, 41),
+      s(6042, 'cass_fallback',               'running',      'cass',      'Geocode Fallback',                 'Applying ZIP/City/County centroid fallback for unresolved addresses',                    false, false, 42),
+      s(6043, 'cass_completed',              'running',      'cass',      'CASS Completed',                   'All records geocoded or suppressed, stage advanced to cass_verified',                    false, false, 43),
+      s(6044, 'cass_failed_threshold',       'quarantined',  'cass',      'Quarantined — Geocode Failures',   'Too many addresses unresolvable — exceeds configured stopper threshold',                 true,  true,  44),
+      s(6045, 'cass_failed_bcc',             'failed',       'cass',      'Failed — BCC SDK Error',           'BCC Architect SDK returned unrecoverable error or circuit breaker opened',              true,  true,  45),
+
+      // ── Rules station ──
+      s(6050, 'rules_started',               'running',      'rules',     'Rules Started',                    'Building CKDTree spatial index from geocoded providers',                                false, false, 50),
+      s(6051, 'rules_index_building',        'running',      'rules',     'Building Spatial Index',           'CKDTree construction in progress from provider lat/lon',                                false, false, 51),
+      s(6052, 'rules_completed',             'running',      'rules',     'Rules Completed',                  'Spatial index built and ready for API queries',                                         false, false, 52),
+      s(6053, 'rules_failed_validation',     'failed',       'rules',     'Failed — Rule Validation',        'One or more rules failed validation (invalid field refs, bad filter syntax)',            true,  true,  53),
+
+      // ── Recon station ──
+      s(6060, 'recon_started',               'running',      'recon',     'Recon Started',                    'Reconciliation and quality scoring in progress',                                        false, false, 60),
+      s(6061, 'recon_quality_scoring',       'running',      'recon',     'Quality Scoring',                  'Computing dimensional quality scores (completeness, accuracy, etc.)',                    false, false, 61),
+      s(6062, 'recon_completed',             'running',      'recon',     'Recon Completed',                  'All quality and recon checks passed — ready for approval',                              false, false, 62),
+      s(6063, 'recon_failed_variance',       'failed',       'recon',     'Failed — Record Count Variance',  'Record count between stations exceeded acceptable variance threshold',                   true,  true,  63),
+
+      // ── Output station ──
+      s(6070, 'output_started',              'running',      'output',    'Output Started',                   'Generating precomp files and activating API endpoints',                                 false, false, 70),
+      s(6071, 'output_precomp_generating',   'running',      'output',    'Precomp Generating',               'Building precomp CSV output files for TNO composition',                                 false, false, 71),
+      s(6072, 'output_api_activating',       'running',      'output',    'API Activating',                   'Swapping active spatial index for API to serve new data',                               false, false, 72),
+      s(6073, 'output_serving',              'completed',    'output',    'Serving',                          'Pipeline complete — Output API is serving data from this refresh',                      true,  false, 73),
+      s(6074, 'output_failed_delivery',      'failed',       'output',    'Failed — Delivery Error',         'Precomp file SFTP delivery or API activation failed',                                   true,  true,  74),
+
+      // ── Approval / terminal statuses ──
+      s(6080, 'awaiting_approval',           'running',      null,        'Awaiting Approval',                'Pipeline execution complete, awaiting operator approval to serve data',                  false, false, 80),
+      s(6081, 'approved',                    'completed',    null,        'Approved',                         'Operator approved — data is live and being served to API consumers',                    true,  false, 81),
+      s(6082, 'rejected',                    'failed',       null,        'Rejected',                         'Operator rejected refresh results — previous approved refresh remains active',          true,  true,  82),
+      s(6083, 'cancelled',                   'cancelled',    null,        'Cancelled',                        'Run was manually cancelled before completion',                                          true,  false, 83),
+      s(6084, 'superseded',                  'cancelled',    null,        'Superseded',                       'A newer run for the same product replaced this one before approval',                    true,  false, 84),
+    ];
+  },
   station_run: () =>
     [1, 2, 3, 4].map((ord) => ({
       id: bscaUuid(940 + ord),
@@ -412,24 +550,28 @@ const GENERATORS = {
       null_profile: { PROV_NPI: 0.008, SITE_NPI: 1.0 },
     },
   ],
-  intake_watch_path: () => [
-    {
-      id: BSCA_IDS.watchPath,
-      tenant_id: BSCA_IDS.tenant,
-      product_id: BSCA_IDS.productImapd,
-      file_source_id: BSCA_IDS.fileSource,
-      watch_path: BSCA_PATHS.uncDropRoot,
-      file_pattern: 'IMAPD*.txt',
-      recursive: false,
-      poll_interval_seconds: 30,
-      stability_delay_seconds: 120,
-      is_enabled: true,
-      exclude_patterns: ['*.yaml', '*.log'],
-      description: 'RdIMAPDHMORaw Medicare full directory drop',
-      created_at: '2026-01-01T00:00:00Z',
-      updated_at: '2026-04-04T09:00:00Z',
-    },
-  ],
+  intake_watch_path: () => {
+    const wp = (uuid, prodId, fsId, pattern, desc) => ({
+      id: bscaUuid(uuid), tenant_id: BSCA_IDS.tenant, product_id: prodId,
+      file_source_id: fsId, watch_path: BSCA_PATHS.uncDropRoot,
+      file_pattern: pattern, recursive: false, poll_interval_seconds: 30,
+      stability_delay_seconds: 120, is_enabled: true,
+      exclude_patterns: ['*.yaml', '*.log', '*.tmp'],
+      description: desc, created_at: '2026-01-01T00:00:00Z', updated_at: '2026-04-04T09:00:00Z',
+    });
+    return [
+      wp(95,   BSCA_IDS.productImapd,    BSCA_IDS.fileSource, 'IMAPDHMO*.txt',  'RdIMAPDHMORaw — Individual MAPD HMO'),
+      wp(5001, BSCA_IDS.productImapdPpo, bscaUuid(71),        'IMAPDPPO*.txt',  'RdIMAPDPPORaw — Individual MAPD PPO'),
+      wp(5002, BSCA_IDS.productDimapd,   bscaUuid(72),        'DIMAPDHMO*.txt', 'RdDIMAPDHMORaw — Dual MAPD HMO (D-SNP)'),
+      wp(5003, BSCA_IDS.productGmapd,    bscaUuid(73),        'GMAPDPPO*.txt',  'RdGMAPDPPORaw — Group MAPD PPO'),
+      wp(5004, BSCA_IDS.productDualsLa,  bscaUuid(74),        'DualsLA*.txt',   'RdDualsLARaw — Dual-Eligible Los Angeles'),
+      wp(5005, BSCA_IDS.productDualsSd,  bscaUuid(75),        'DualsSD*.txt',   'RdDualsSDRaw — Dual-Eligible San Diego'),
+      wp(5006, BSCA_IDS.productMdCalLa,  bscaUuid(76),        'MdCalLA*.txt',   'RdMdCalLARaw — Medi-Cal Los Angeles'),
+      wp(5007, BSCA_IDS.productMdCalSd,  bscaUuid(77),        'MdCalSD*.txt',   'RdMdCalSDRaw — Medi-Cal San Diego'),
+      wp(5008, BSCA_IDS.productAccu,     bscaUuid(78),        'ACCU*.txt',      'RdACCURaw — Acupuncture & Chiropractic'),
+      wp(5009, BSCA_IDS.productVision,   bscaUuid(79),        'Vision*.txt',    'RdVisionRaw — Vision Services'),
+    ];
+  },
   intake_retry_config: () => [
     {
       id: bscaUuid(105),
@@ -762,42 +904,46 @@ const GENERATORS = {
     },
   ],
   iso_language_standard: () => [
-    {
-      id: BSCA_IDS.isoEn,
-      iso_639_1: 'en',
-      iso_639_2: 'eng',
-      iso_639_3: 'eng',
-      name_english: 'English',
-      direction: 'ltr',
-    },
-    {
-      id: BSCA_IDS.isoEs,
-      iso_639_1: 'es',
-      iso_639_2: 'spa',
-      iso_639_3: 'spa',
-      name_english: 'Spanish',
-      direction: 'ltr',
-    },
+    { id: BSCA_IDS.isoEn, iso_639_1: 'en', iso_639_2: 'eng', iso_639_3: 'eng', name_english: 'English', direction: 'ltr' },
+    { id: BSCA_IDS.isoEs, iso_639_1: 'es', iso_639_2: 'spa', iso_639_3: 'spa', name_english: 'Spanish', direction: 'ltr' },
+    { id: BSCA_IDS.isoAr, iso_639_1: 'ar', iso_639_2: 'ara', iso_639_3: 'ara', name_english: 'Arabic', direction: 'rtl' },
+    { id: BSCA_IDS.isoHy, iso_639_1: 'hy', iso_639_2: 'hye', iso_639_3: 'hye', name_english: 'Armenian', direction: 'ltr' },
+    { id: BSCA_IDS.isoFa, iso_639_1: 'fa', iso_639_2: 'fas', iso_639_3: 'fas', name_english: 'Farsi', direction: 'rtl' },
+    { id: BSCA_IDS.isoKm, iso_639_1: 'km', iso_639_2: 'khm', iso_639_3: 'khm', name_english: 'Khmer', direction: 'ltr' },
+    { id: BSCA_IDS.isoKo, iso_639_1: 'ko', iso_639_2: 'kor', iso_639_3: 'kor', name_english: 'Korean', direction: 'ltr' },
+    { id: BSCA_IDS.isoRu, iso_639_1: 'ru', iso_639_2: 'rus', iso_639_3: 'rus', name_english: 'Russian', direction: 'ltr' },
+    { id: BSCA_IDS.isoTl, iso_639_1: 'tl', iso_639_2: 'tgl', iso_639_3: 'tgl', name_english: 'Tagalog', direction: 'ltr' },
+    { id: BSCA_IDS.isoZhHans, iso_639_1: 'zh', iso_639_2: 'zho', iso_639_3: 'cmn', name_english: 'Simplified Chinese', direction: 'ltr' },
+    { id: BSCA_IDS.isoZhHant, iso_639_1: 'zh', iso_639_2: 'zho', iso_639_3: 'cmn', name_english: 'Traditional Chinese', direction: 'ltr' },
+    { id: BSCA_IDS.isoVi, iso_639_1: 'vi', iso_639_2: 'vie', iso_639_3: 'vie', name_english: 'Vietnamese', direction: 'ltr' },
   ],
   language: () => [
-    {
-      id: BSCA_IDS.langEn,
-      code: 'EN01',
-      name: 'English',
-      iso_language_id: BSCA_IDS.isoEn,
-      display_order: 1,
-    },
-    {
-      id: BSCA_IDS.langEs,
-      code: 'SP01',
-      name: 'Spanish',
-      iso_language_id: BSCA_IDS.isoEs,
-      display_order: 2,
-    },
+    { id: BSCA_IDS.langEn, code: 'EN01', name: 'English', iso_language_id: BSCA_IDS.isoEn, display_order: 1 },
+    { id: BSCA_IDS.langEs, code: 'SP01', name: 'Spanish', iso_language_id: BSCA_IDS.isoEs, display_order: 2 },
+    { id: BSCA_IDS.langAr, code: 'AR01', name: 'Arabic', iso_language_id: BSCA_IDS.isoAr, display_order: 3 },
+    { id: BSCA_IDS.langHy, code: 'AM01', name: 'Armenian', iso_language_id: BSCA_IDS.isoHy, display_order: 4 },
+    { id: BSCA_IDS.langFa, code: 'FA01', name: 'Farsi', iso_language_id: BSCA_IDS.isoFa, display_order: 5 },
+    { id: BSCA_IDS.langKm, code: 'KH01', name: 'Khmer', iso_language_id: BSCA_IDS.isoKm, display_order: 6 },
+    { id: BSCA_IDS.langKo, code: 'KO01', name: 'Korean', iso_language_id: BSCA_IDS.isoKo, display_order: 7 },
+    { id: BSCA_IDS.langRu, code: 'RU01', name: 'Russian', iso_language_id: BSCA_IDS.isoRu, display_order: 8 },
+    { id: BSCA_IDS.langTl, code: 'TG01', name: 'Tagalog', iso_language_id: BSCA_IDS.isoTl, display_order: 9 },
+    { id: BSCA_IDS.langZhHans, code: 'CH04', name: 'Simplified Chinese', iso_language_id: BSCA_IDS.isoZhHans, display_order: 10 },
+    { id: BSCA_IDS.langZhHant, code: 'CH05', name: 'Traditional Chinese', iso_language_id: BSCA_IDS.isoZhHant, display_order: 11 },
+    { id: BSCA_IDS.langVi, code: 'VI01', name: 'Vietnamese', iso_language_id: BSCA_IDS.isoVi, display_order: 12 },
   ],
   language_alias: () => [
-    { id: bscaUuid(611), language_id: BSCA_IDS.langEn, tenant_id: BSCA_IDS.tenant, alias_code: 'EN01' },
-    { id: bscaUuid(612), language_id: BSCA_IDS.langEs, tenant_id: BSCA_IDS.tenant, alias_code: 'SP01' },
+    { id: bscaUuid(630), language_id: BSCA_IDS.langEn, tenant_id: BSCA_IDS.tenant, alias_code: 'EN01' },
+    { id: bscaUuid(631), language_id: BSCA_IDS.langEs, tenant_id: BSCA_IDS.tenant, alias_code: 'SP01' },
+    { id: bscaUuid(632), language_id: BSCA_IDS.langAr, tenant_id: BSCA_IDS.tenant, alias_code: 'AR01' },
+    { id: bscaUuid(633), language_id: BSCA_IDS.langHy, tenant_id: BSCA_IDS.tenant, alias_code: 'AM01' },
+    { id: bscaUuid(634), language_id: BSCA_IDS.langFa, tenant_id: BSCA_IDS.tenant, alias_code: 'FA01' },
+    { id: bscaUuid(635), language_id: BSCA_IDS.langKm, tenant_id: BSCA_IDS.tenant, alias_code: 'KH01' },
+    { id: bscaUuid(636), language_id: BSCA_IDS.langKo, tenant_id: BSCA_IDS.tenant, alias_code: 'KO01' },
+    { id: bscaUuid(637), language_id: BSCA_IDS.langRu, tenant_id: BSCA_IDS.tenant, alias_code: 'RU01' },
+    { id: bscaUuid(638), language_id: BSCA_IDS.langTl, tenant_id: BSCA_IDS.tenant, alias_code: 'TG01' },
+    { id: bscaUuid(639), language_id: BSCA_IDS.langZhHans, tenant_id: BSCA_IDS.tenant, alias_code: 'CH04' },
+    { id: bscaUuid(640), language_id: BSCA_IDS.langZhHant, tenant_id: BSCA_IDS.tenant, alias_code: 'CH05' },
+    { id: bscaUuid(641), language_id: BSCA_IDS.langVi, tenant_id: BSCA_IDS.tenant, alias_code: 'VI01' },
   ],
   provider_specialty_type: () => [
     {
@@ -867,7 +1013,14 @@ const GENERATORS = {
           ],
           _legacy_sql: r.providerWhereClause,
         },
-        member_filter: r.memberWhereClause ? { _legacy_sql: r.memberWhereClause } : null,
+        member_filter: r.memberWhereClause
+          ? (() => {
+              const m = r.memberWhereClause.match(/m\.Template\s*=\s*'([^']+)'/);
+              return m
+                ? { op: 'and', conditions: [{ field: 'template', op: 'eq', value: m[1] }] }
+                : { op: 'and', conditions: [{ field: 'template', op: 'eq', value: '_UNKNOWN_' }], _legacy_sql: r.memberWhereClause };
+            })()
+          : null,
         specialty_codes: ['PCP'],
         network_codes: ['MIMAPD000001', 'MIMAPD000003'],
         plan_year: 2026,
@@ -1019,14 +1172,24 @@ const GENERATORS = {
       is_active: true,
     },
   ],
-  product_plan_year: () => [
-    {
-      id: BSCA_IDS.ppyImapd2026,
-      product_id: BSCA_IDS.productImapd,
-      plan_year_id: BSCA_IDS.planYear2026,
-      effective_date: '2026-01-01',
-    },
-  ],
+  product_plan_year: () => {
+    const ppy = (uuid, prodId, desc) => ({
+      id: bscaUuid(uuid), product_id: prodId,
+      plan_year_id: BSCA_IDS.planYear2026, effective_date: '2026-01-01',
+    });
+    return [
+      { id: BSCA_IDS.ppyImapd2026,   product_id: BSCA_IDS.productImapd,    plan_year_id: BSCA_IDS.planYear2026, effective_date: '2026-01-01' },
+      { id: bscaUuid(21),             product_id: BSCA_IDS.productImapdPpo, plan_year_id: BSCA_IDS.planYear2026, effective_date: '2026-01-01' },
+      { id: bscaUuid(22),             product_id: BSCA_IDS.productDimapd,   plan_year_id: BSCA_IDS.planYear2026, effective_date: '2026-01-01' },
+      { id: bscaUuid(23),             product_id: BSCA_IDS.productGmapd,    plan_year_id: BSCA_IDS.planYear2026, effective_date: '2026-01-01' },
+      { id: bscaUuid(24),             product_id: BSCA_IDS.productDualsLa,  plan_year_id: BSCA_IDS.planYear2026, effective_date: '2026-01-01' },
+      { id: bscaUuid(25),             product_id: BSCA_IDS.productDualsSd,  plan_year_id: BSCA_IDS.planYear2026, effective_date: '2026-01-01' },
+      { id: bscaUuid(26),             product_id: BSCA_IDS.productMdCalLa,  plan_year_id: BSCA_IDS.planYear2026, effective_date: '2026-01-01' },
+      { id: bscaUuid(27),             product_id: BSCA_IDS.productMdCalSd,  plan_year_id: BSCA_IDS.planYear2026, effective_date: '2026-01-01' },
+      { id: bscaUuid(28),             product_id: BSCA_IDS.productAccu,     plan_year_id: BSCA_IDS.planYear2026, effective_date: '2026-01-01' },
+      { id: bscaUuid(29),             product_id: BSCA_IDS.productVision,   plan_year_id: BSCA_IDS.planYear2026, effective_date: '2026-01-01' },
+    ];
+  },
   plan_year_change_history: () => [
     {
       id: bscaUuid(842),
@@ -1101,15 +1264,16 @@ const GENERATORS = {
     },
   ],
   file_source: () => [
-    {
-      id: BSCA_IDS.fileSource,
-      tenant_id: BSCA_IDS.tenant,
-      source_type: 'unc',
-      name: 'BSCA ODS IMAPD drop (dev)',
-      config: { unc_root: BSCA_PATHS.uncDropRoot, notes: 'RdIMAPDHMORaw' },
-      file_pattern: 'IMAPD*.txt',
-      expected_column_count: 386,
-    },
+    { id: BSCA_IDS.fileSource,  tenant_id: BSCA_IDS.tenant, product_id: BSCA_IDS.productImapd,    source_type: 'unc_share', name: 'BSCA IMAPDHMO drop',   file_format_id: bscaUuid(4001), config: { unc_root: BSCA_PATHS.uncDropRoot, notes: 'RdIMAPDHMORaw' },     file_pattern: 'IMAPD*HMO*.txt',  expected_column_count: 386 },
+    { id: bscaUuid(71),         tenant_id: BSCA_IDS.tenant, product_id: BSCA_IDS.productImapdPpo, source_type: 'unc_share', name: 'BSCA IMAPDPPO drop',   file_format_id: bscaUuid(4001), config: { unc_root: BSCA_PATHS.uncDropRoot, notes: 'RdIMAPDPPORaw' },     file_pattern: 'IMAPD*PPO*.txt',  expected_column_count: 386 },
+    { id: bscaUuid(72),         tenant_id: BSCA_IDS.tenant, product_id: BSCA_IDS.productDimapd,   source_type: 'unc_share', name: 'BSCA DIMAPDHMO drop',  file_format_id: bscaUuid(4001), config: { unc_root: BSCA_PATHS.uncDropRoot, notes: 'RdDIMAPDHMORaw' },    file_pattern: 'DIMAPD*.txt',     expected_column_count: 386 },
+    { id: bscaUuid(73),         tenant_id: BSCA_IDS.tenant, product_id: BSCA_IDS.productGmapd,    source_type: 'unc_share', name: 'BSCA GMAPDPPO drop',   file_format_id: bscaUuid(4001), config: { unc_root: BSCA_PATHS.uncDropRoot, notes: 'RdGMAPDPPORaw' },     file_pattern: 'GMAPD*.txt',      expected_column_count: 386 },
+    { id: bscaUuid(74),         tenant_id: BSCA_IDS.tenant, product_id: BSCA_IDS.productDualsLa,  source_type: 'unc_share', name: 'BSCA Duals LA drop',   file_format_id: bscaUuid(4001), config: { unc_root: BSCA_PATHS.uncDropRoot, notes: 'RdDualsLARaw' },      file_pattern: 'Duals*LA*.txt',   expected_column_count: 386 },
+    { id: bscaUuid(75),         tenant_id: BSCA_IDS.tenant, product_id: BSCA_IDS.productDualsSd,  source_type: 'unc_share', name: 'BSCA Duals SD drop',   file_format_id: bscaUuid(4001), config: { unc_root: BSCA_PATHS.uncDropRoot, notes: 'RdDualsSDRaw' },      file_pattern: 'Duals*SD*.txt',   expected_column_count: 386 },
+    { id: bscaUuid(76),         tenant_id: BSCA_IDS.tenant, product_id: BSCA_IDS.productMdCalLa,  source_type: 'unc_share', name: 'BSCA MdCal LA drop',   file_format_id: bscaUuid(4001), config: { unc_root: BSCA_PATHS.uncDropRoot, notes: 'RdMdCalLARaw' },      file_pattern: 'MdCal*LA*.txt',   expected_column_count: 386 },
+    { id: bscaUuid(77),         tenant_id: BSCA_IDS.tenant, product_id: BSCA_IDS.productMdCalSd,  source_type: 'unc_share', name: 'BSCA MdCal SD drop',   file_format_id: bscaUuid(4001), config: { unc_root: BSCA_PATHS.uncDropRoot, notes: 'RdMdCalSDRaw' },      file_pattern: 'MdCal*SD*.txt',   expected_column_count: 386 },
+    { id: bscaUuid(78),         tenant_id: BSCA_IDS.tenant, product_id: BSCA_IDS.productAccu,     source_type: 'unc_share', name: 'BSCA ACCU drop',       file_format_id: bscaUuid(4001), config: { unc_root: BSCA_PATHS.uncDropRoot, notes: 'RdACCURaw' },         file_pattern: 'ACCU*.txt',       expected_column_count: 386 },
+    { id: bscaUuid(79),         tenant_id: BSCA_IDS.tenant, product_id: BSCA_IDS.productVision,   source_type: 'unc_share', name: 'BSCA Vision drop',     file_format_id: bscaUuid(4001), config: { unc_root: BSCA_PATHS.uncDropRoot, notes: 'RdVisionRaw' },       file_pattern: 'Vision*.txt',     expected_column_count: 386 },
   ],
   file_import: () => [
     {
@@ -1141,35 +1305,121 @@ const GENERATORS = {
     },
   ],
   file_mask: () => [
-    {
-      id: bscaUuid(1072),
-      file_source_id: BSCA_IDS.fileSource,
-      pattern: 'IMAPDHMOFullDirectory_*.txt',
-      dedup_scope: 'lob_plan_year',
-    },
+    { id: bscaUuid(1072), file_source_id: BSCA_IDS.fileSource,  pattern: 'IMAPDHMOFullDirectory_{YYYYMMDD}.txt',  dedup_scope: 'lob_plan_year' },
+    { id: bscaUuid(1073), file_source_id: bscaUuid(71),         pattern: 'IMAPDPPOFullDirectory_{YYYYMMDD}.txt',  dedup_scope: 'lob_plan_year' },
+    { id: bscaUuid(1074), file_source_id: bscaUuid(72),         pattern: 'DIMAPDHMOFullDirectory_{YYYYMMDD}.txt', dedup_scope: 'lob_plan_year' },
+    { id: bscaUuid(1075), file_source_id: bscaUuid(73),         pattern: 'GMAPDPPOFullDirectory_{YYYYMMDD}.txt',  dedup_scope: 'lob_plan_year' },
+    { id: bscaUuid(1076), file_source_id: bscaUuid(74),         pattern: 'DualsLAFullDirectory_{YYYYMMDD}.txt',   dedup_scope: 'lob_plan_year' },
+    { id: bscaUuid(1077), file_source_id: bscaUuid(75),         pattern: 'DualsSDFullDirectory_{YYYYMMDD}.txt',   dedup_scope: 'lob_plan_year' },
+    { id: bscaUuid(1078), file_source_id: bscaUuid(76),         pattern: 'MdCalLAFullDirectory_{YYYYMMDD}.txt',   dedup_scope: 'lob_plan_year' },
+    { id: bscaUuid(1079), file_source_id: bscaUuid(77),         pattern: 'MdCalSDFullDirectory_{YYYYMMDD}.txt',   dedup_scope: 'lob_plan_year' },
+    { id: bscaUuid(1080), file_source_id: bscaUuid(78),         pattern: 'ACCUFullDirectory_{YYYYMMDD}.txt',      dedup_scope: 'lob_plan_year' },
+    { id: bscaUuid(1081), file_source_id: bscaUuid(79),         pattern: 'VisionFullDirectory_{YYYYMMDD}.txt',    dedup_scope: 'lob_plan_year' },
   ],
-  canonical_field: () => [
-    {
-      id: bscaUuid(621),
-      field_name: 'provider_npi',
-      display_name: 'Provider NPI',
-      data_type: 'string',
-      is_required: true,
-      is_pii: true,
-      field_group: 'provider',
-      ordinal: 1,
-    },
-    {
-      id: bscaUuid(622),
-      field_name: 'site_addr1',
-      display_name: 'Practice address line 1',
-      data_type: 'string',
-      is_required: true,
-      is_pii: false,
-      field_group: 'site',
-      ordinal: 2,
-    },
-  ],
+  canonical_field: () => {
+    const f = (uuid, name, display, type, group, ord, req = false, pii = false) => ({
+      id: bscaUuid(uuid), field_name: name, display_name: display,
+      data_type: type, field_group: group, ordinal: ord, is_required: req, is_pii: pii,
+    });
+    return [
+      // ── Identity ──
+      f(2001, 'provider_npi',        'Provider NPI',           'string',  'identity',  1,  true,  false),
+      f(2002, 'site_npi',            'Site NPI',               'string',  'identity',  2,  false, false),
+      f(2003, 'ncpdp',               'NCPDP Number',           'string',  'identity',  3,  false, false),
+      f(2004, 'tax_id',              'Tax ID',                 'string',  'identity',  4,  false, true),
+      f(2005, 'dea_number',          'DEA Number',             'string',  'identity',  5,  false, false),
+      f(2006, 'license_number',      'License Number',         'string',  'identity',  6,  false, false),
+      f(2007, 'license_state',       'License State',          'string',  'identity',  7,  false, false),
+      f(2008, 'medicaid_id',         'Medicaid ID',            'string',  'identity',  8,  false, false),
+
+      // ── Name ──
+      f(2010, 'first_name',          'First Name',             'string',  'name',      10, true,  true),
+      f(2011, 'middle_name',         'Middle Name',            'string',  'name',      11, false, true),
+      f(2012, 'last_name',           'Last Name',              'string',  'name',      12, true,  true),
+      f(2013, 'suffix',              'Name Suffix',            'string',  'name',      13, false, true),
+      f(2014, 'credential',          'Credential',             'string',  'name',      14, false, false),
+      f(2015, 'group_name',          'Group/Organization Name','string',  'name',      15, false, true),
+      f(2016, 'doing_business_as',   'Doing Business As',      'string',  'name',      16, false, true),
+
+      // ── Primary Address ──
+      f(2020, 'site_address_1',      'Site Address Line 1',    'string',  'address',   20, true,  true),
+      f(2021, 'site_address_2',      'Site Address Line 2',    'string',  'address',   21, false, true),
+      f(2022, 'city',                'City',                   'string',  'address',   22, true,  false),
+      f(2023, 'state',               'State',                  'string',  'address',   23, true,  false),
+      f(2024, 'zip',                 'ZIP Code',               'string',  'address',   24, true,  false),
+      f(2025, 'zip_plus_4',          'ZIP+4',                  'string',  'address',   25, false, false),
+      f(2026, 'county',              'County',                 'string',  'address',   26, false, false),
+      f(2027, 'county_fips_code',    'County FIPS Code',       'string',  'address',   27, false, false),
+      f(2028, 'country',             'Country',                'string',  'address',   28, false, false),
+
+      // ── Mailing Address ──
+      f(2030, 'mail_address_1',      'Mailing Address Line 1', 'string',  'mail_address', 30, false, true),
+      f(2031, 'mail_address_2',      'Mailing Address Line 2', 'string',  'mail_address', 31, false, true),
+      f(2032, 'mail_city',           'Mailing City',           'string',  'mail_address', 32, false, false),
+      f(2033, 'mail_state',          'Mailing State',          'string',  'mail_address', 33, false, false),
+      f(2034, 'mail_zip',            'Mailing ZIP Code',       'string',  'mail_address', 34, false, false),
+
+      // ── Contact ──
+      f(2040, 'phone',               'Primary Phone',          'string',  'contact',   40, false, true),
+      f(2041, 'phone_extension',     'Phone Extension',        'string',  'contact',   41, false, false),
+      f(2042, 'fax',                 'Fax Number',             'string',  'contact',   42, false, true),
+      f(2043, 'email',               'Email Address',          'string',  'contact',   43, false, true),
+      f(2044, 'website',             'Website URL',            'string',  'contact',   44, false, false),
+      f(2045, 'tty',                 'TTY Number',             'string',  'contact',   45, false, false),
+
+      // ── Clinical / Practice ──
+      f(2050, 'specialty_code',      'Specialty Code',         'string',  'clinical',  50, true,  false),
+      f(2051, 'specialty_description','Specialty Description', 'string',  'clinical',  51, false, false),
+      f(2052, 'taxonomy_code',       'Taxonomy Code',          'string',  'clinical',  52, false, false),
+      f(2053, 'board_certified',     'Board Certified',        'boolean', 'clinical',  53, false, false),
+      f(2054, 'accepting_new_patients','Accepting New Patients','boolean','clinical',  54, false, false),
+      f(2055, 'provider_type',       'Provider Type',          'string',  'clinical',  55, false, false),
+      f(2056, 'hospital_affiliation','Hospital Affiliation',   'string',  'clinical',  56, false, false),
+      f(2057, 'group_affiliation_npi','Group Affiliation NPI', 'string',  'clinical',  57, false, false),
+
+      // ── Demographics ──
+      f(2060, 'gender',              'Gender',                 'string',  'demographics', 60, false, false),
+      f(2061, 'languages',           'Languages Spoken',       'json',    'demographics', 61, false, false),
+      f(2062, 'hours_of_operation',  'Office Hours',           'json',    'demographics', 62, false, false),
+      f(2063, 'handicap_accessible', 'Handicap Accessible',   'boolean', 'demographics', 63, false, false),
+      f(2064, 'telehealth',          'Telehealth Available',   'boolean', 'demographics', 64, false, false),
+
+      // ── Network ──
+      f(2070, 'network_id',          'Network ID',             'string',  'network',   70, false, false),
+      f(2071, 'network_code',        'Network Code',           'string',  'network',   71, false, false),
+      f(2072, 'network_name',        'Network Name',           'string',  'network',   72, false, false),
+      f(2073, 'product_type',        'Product Type',           'string',  'network',   73, false, false),
+      f(2074, 'plan_name',           'Plan Name',              'string',  'network',   74, false, false),
+      f(2075, 'effective_date',      'Network Effective Date', 'date',    'network',   75, false, false),
+      f(2076, 'termination_date',    'Network Termination Date','date',   'network',   76, false, false),
+      f(2077, 'tier',                'Network Tier',           'string',  'network',   77, false, false),
+
+      // ── Accessibility / ECM ──
+      f(2080, 'accessibility_codes', 'Accessibility Codes',    'string',  'accessibility', 80, false, false),
+      f(2081, 'ecm_indicators',      'ECM Indicators',         'json',    'accessibility', 81, false, false),
+      f(2082, 'cultural_competency', 'Cultural Competency',    'string',  'accessibility', 82, false, false),
+
+      // ── Geographic / Geocode ──
+      f(2090, 'latitude',            'Latitude',               'decimal', 'geocode',   90, false, false),
+      f(2091, 'longitude',           'Longitude',              'decimal', 'geocode',   91, false, false),
+      f(2092, 'geocode_accuracy',    'Geocode Accuracy',       'string',  'geocode',   92, false, false),
+
+      // ── CASS ──
+      f(2095, 'cass_status',         'CASS Status',            'string',  'cass',      95, false, false),
+      f(2096, 'dpv_code',            'DPV Code',               'string',  'cass',      96, false, false),
+      f(2097, 'dpv_footnotes',       'DPV Footnotes',          'string',  'cass',      97, false, false),
+      f(2098, 'cass_timestamp',      'CASS Processed At',      'datetime','cass',      98, false, false),
+
+      // ── Metadata ──
+      f(2100, 'record_id',           'Record ID',              'string',  'metadata',  100, true,  false),
+      f(2101, 'tenant_code',         'Tenant Code',            'string',  'metadata',  101, true,  false),
+      f(2102, 'refresh_id',          'Refresh ID',             'string',  'metadata',  102, true,  false),
+      f(2103, 'source_row_number',   'Source Row Number',      'integer', 'metadata',  103, true,  false),
+      f(2104, 'source_file_id',      'Source File ID',         'string',  'metadata',  104, false, false),
+      f(2105, 'created_at',          'Created At',             'datetime','metadata',  105, false, false),
+      f(2106, 'updated_at',          'Updated At',             'datetime','metadata',  106, false, false),
+    ];
+  },
   source_field_mapping: () => [
     {
       id: bscaUuid(701),
@@ -1285,22 +1535,62 @@ const GENERATORS = {
     {
       id: BSCA_IDS.cleansingPipeline,
       tenant_id: BSCA_IDS.tenant,
-      name: 'BSCA IMAPDHMO Cleansing Pipeline v3',
+      name: 'BSCA Provider Directory Cleansing Pipeline',
       version: 3,
+      pipeline_config: {
+        description: 'Canonical provider cleansing: names → addresses → phones → codes → validation',
+        execution_mode: 'sequential',
+        stop_on_error: false,
+        dlq_enabled: true,
+      },
       is_active: true,
     },
   ],
-  cleansing_rule: () => [
-    {
-      id: bscaUuid(801),
-      pipeline_id: BSCA_IDS.cleansingPipeline,
-      udf_function_id: BSCA_IDS.udfTrim,
-      target_field: 'PROV_LAST_NM',
-      ordinal: 1,
-      parameters: {},
-      is_active: true,
-    },
-  ],
+  cleansing_rule: () => {
+    const cr = (uuid, field, udfSeed, ord, params = {}) => ({
+      id: bscaUuid(uuid), pipeline_id: BSCA_IDS.cleansingPipeline,
+      udf_function_id: bscaUuid(udfSeed), target_field: field,
+      ordinal: ord, parameters: params, is_active: true,
+    });
+    return [
+      // ── Phase 1: Name cleansing ──
+      cr(801, 'first_name',           90, 1),                    // TRIM
+      cr(802, 'last_name',            90, 2),                    // TRIM
+      cr(803, 'middle_name',          90, 3),                    // TRIM
+      cr(804, 'group_name',           90, 4),                    // TRIM
+      cr(805, 'first_name',           93, 5),                    // PROPER_CASE
+      cr(806, 'last_name',            93, 6),                    // PROPER_CASE
+      cr(807, 'group_name',           93, 7),                    // PROPER_CASE
+      cr(808, 'credential',           91, 8),                    // UPPER
+      cr(809, 'group_name',           94, 9, { acronyms: ['CVS','LLC','FQHC','MD','DO','DDS','NP','PA','INC','DBA'] }), // CAPITALIZE_ACRONYMS
+
+      // ── Phase 2: Address cleansing ──
+      cr(810, 'site_address_1',       90, 10),                   // TRIM
+      cr(811, 'site_address_2',       90, 11),                   // TRIM
+      cr(812, 'city',                 90, 12),                   // TRIM
+      cr(813, 'site_address_1',       104, 13),                  // ADDRESS_STANDARDIZE
+      cr(814, 'city',                 93, 14),                   // PROPER_CASE
+      cr(815, 'state',                102, 15, { default: 'CA' }), // STATE_NORMALIZE
+      cr(816, 'zip',                  103, 16, { length: 5 }),   // ZIP_FORMAT
+
+      // ── Phase 3: Contact cleansing ──
+      cr(820, 'phone',                105, 20),                  // GET_NUMERIC
+      cr(821, 'phone',                101, 21),                  // PHONE_FORMAT
+      cr(822, 'fax',                  105, 22),                  // GET_NUMERIC
+      cr(823, 'fax',                  101, 23),                  // PHONE_FORMAT
+
+      // ── Phase 4: Code normalization ──
+      cr(830, 'provider_npi',         108, 30, { expectedLength: 10, padWithZeros: true }), // NPI_VALIDATE
+      cr(831, 'gender',               109, 31),                  // GENDER_NORMALIZE
+      cr(832, 'languages',            107, 32, { delimiter: ',' }), // DISTINCT_LIST
+      cr(833, 'languages',            113, 33, { mapping: { SPA: 'Spanish', VIE: 'Vietnamese', CHI: 'Chinese', KOR: 'Korean', RUS: 'Russian', ARM: 'Armenian', ARA: 'Arabic', FAR: 'Farsi', KHM: 'Khmer', TAG: 'Tagalog' } }), // LANGUAGE_NORMALIZE
+
+      // ── Phase 5: Smart quotes & misc ──
+      cr(840, 'first_name',           106, 40),                  // SMART_QUOTE_REPLACE
+      cr(841, 'last_name',            106, 41),                  // SMART_QUOTE_REPLACE
+      cr(842, 'site_address_1',       106, 42),                  // SMART_QUOTE_REPLACE
+    ];
+  },
   // Real UDF function library (28+ built-in functions used by cleansing pipeline)
   udf_function: () => {
     const u = (seed, name, cat, desc, params, opts = {}) => ({
@@ -1403,9 +1693,26 @@ const GENERATORS = {
     {
       id: bscaUuid(1161),
       tenant_id: BSCA_IDS.tenant,
-      format: 'json',
+      output_type: 'precomp',
       delivery_method: 'sftp',
-      config: { composition: 'BSCA TNO', encoding: 'utf-8', endpoint: '/api/v1/bsca/precomp' },
+      csv_include_header: true,
+      include_enclosures: true,
+      include_footers: true,
+      footer_default_text: 'Blue Shield of California is an independent member of the Blue Shield Association.',
+      footer_hospital_text: 'For hospital quality information, visit www.calhospitalcompare.org.',
+      config: { composition: 'BSCA TNO', encoding: 'utf-8', delimiter: '|', sftp_path: '/bsca/precomp/' },
+    },
+    {
+      id: bscaUuid(1162),
+      tenant_id: BSCA_IDS.tenant,
+      output_type: 'api',
+      delivery_method: 'api',
+      csv_include_header: false,
+      include_enclosures: true,
+      include_footers: true,
+      footer_default_text: 'Blue Shield of California is an independent member of the Blue Shield Association.',
+      footer_hospital_text: 'For hospital quality information, visit www.calhospitalcompare.org.',
+      config: { base_url: '/api/v1/bsca', rate_limit_per_minute: 60, cache_ttl_seconds: 3600 },
     },
   ],
   component_template: () => [
@@ -1417,6 +1724,22 @@ const GENERATORS = {
       default_config: { phase1: 'name', phase2: 'hash' },
     },
   ],
+  supported_file_format: () => {
+    const ff = (uuid, code, name, mime, delim, parser, enc, streaming, cfg = {}) => ({
+      id: bscaUuid(uuid), format_code: code, name, mime_type: mime, delimiter: delim,
+      parser_class: parser, default_encoding: enc, supports_streaming: streaming,
+      default_config: cfg, is_active: true,
+    });
+    return [
+      ff(4001, 'CSV_PIPE',     'Pipe-Delimited CSV',    'text/csv',                       '|',  'CsvStreamParser',       'UTF-8',        true,  { quote_char: '"', escape_char: '\\' }),
+      ff(4002, 'CSV_COMMA',    'Comma-Delimited CSV',   'text/csv',                       ',',  'CsvStreamParser',       'UTF-8',        true,  { quote_char: '"', escape_char: '\\' }),
+      ff(4003, 'CSV_TAB',      'Tab-Delimited CSV',     'text/tab-separated-values',      '\t', 'CsvStreamParser',       'UTF-8',        true,  { quote_char: '"' }),
+      ff(4004, 'EXCEL_XLSX',   'Excel Spreadsheet',     'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', null, 'ExcelParser', 'UTF-8', false, { sheet_index: 0, header_row: 1 }),
+      ff(4005, 'JSON',         'JSON Lines',            'application/json',                null, 'JsonStreamParser',      'UTF-8',        true,  { json_path: '$[*]' }),
+      ff(4006, 'XML',          'XML Structured',        'application/xml',                 null, 'XmlParser',             'UTF-8',        false, { row_element: 'record' }),
+      ff(4007, 'FIXED_WIDTH',  'Fixed-Width Columnar',  'text/plain',                      null, 'FixedWidthParser',      'Windows-1252', true,  { column_spec_required: true }),
+    ];
+  },
   tenant_config: () => [
     {
       id: bscaUuid(501),
@@ -1900,6 +2223,140 @@ const GENERATORS = {
     { id: bscaUuid(8463), entity_type: 'udf', entity_id: 'PROPER_CASE', label: 'PROPER_CASE', description: 'Title case with acronym recognition (LLC, PLLC, IPA, YMCA, CVS)', keywords: ['proper', 'case', 'title', 'capitalize', 'acronym'], parent_entity: null, layer: null, url_path: '#/udf-studio/PROPER_CASE', indexed_at: '2026-04-04T06:00:00Z' },
     { id: bscaUuid(8464), entity_type: 'table', entity_id: 'app_user', label: 'app_user', description: 'OIDC-linked user identity — Azure AD / Okta SSO', keywords: ['user', 'auth', 'oidc', 'login', 'sso'], parent_entity: null, layer: 'admin_rbac', url_path: '#/tables/app_user', indexed_at: '2026-04-04T06:00:00Z' },
   ],
+
+  // ── Archival Service ──
+  retention_policy: () => [
+    { id: bscaUuid(9030), tenant_id: null, data_class: 'provider_refresh', hot_days: 90, warm_days: 1095, cold_days: 3650, total_retention_days: 3650, legal_citation: '42 CFR 422.504', is_active: true, approved_by: 'Compliance', approved_at: '2026-01-15T00:00:00Z', notes: 'Global default — 10-year Medicare Advantage retention', created_at: '2026-01-15T00:00:00Z', updated_at: '2026-01-15T00:00:00Z' },
+    { id: bscaUuid(9031), tenant_id: null, data_class: 'raw_import_file', hot_days: 90, warm_days: 1095, cold_days: 3650, total_retention_days: 3650, legal_citation: '42 CFR 422.504', is_active: true, approved_by: 'Compliance', approved_at: '2026-01-15T00:00:00Z', notes: null, created_at: '2026-01-15T00:00:00Z', updated_at: '2026-01-15T00:00:00Z' },
+    { id: bscaUuid(9032), tenant_id: null, data_class: 'cass_result', hot_days: 90, warm_days: 1095, cold_days: 3650, total_retention_days: 3650, legal_citation: '42 CFR 422.504', is_active: true, approved_by: 'Compliance', approved_at: '2026-01-15T00:00:00Z', notes: null, created_at: '2026-01-15T00:00:00Z', updated_at: '2026-01-15T00:00:00Z' },
+    { id: bscaUuid(9033), tenant_id: null, data_class: 'audit_event', hot_days: 90, warm_days: 1095, cold_days: 3650, total_retention_days: 3650, legal_citation: 'HIPAA + 42 CFR 422.504', is_active: true, approved_by: 'Compliance', approved_at: '2026-01-15T00:00:00Z', notes: null, created_at: '2026-01-15T00:00:00Z', updated_at: '2026-01-15T00:00:00Z' },
+    { id: bscaUuid(9034), tenant_id: null, data_class: 'execution_log', hot_days: 30, warm_days: 365, cold_days: 3650, total_retention_days: 3650, legal_citation: 'Best practice', is_active: true, approved_by: 'Engineering', approved_at: '2026-01-15T00:00:00Z', notes: null, created_at: '2026-01-15T00:00:00Z', updated_at: '2026-01-15T00:00:00Z' },
+    { id: bscaUuid(9035), tenant_id: null, data_class: 'quality_result', hot_days: 30, warm_days: 1095, cold_days: 3650, total_retention_days: 3650, legal_citation: '42 CFR 422.504', is_active: true, approved_by: 'Compliance', approved_at: '2026-01-15T00:00:00Z', notes: null, created_at: '2026-01-15T00:00:00Z', updated_at: '2026-01-15T00:00:00Z' },
+    { id: bscaUuid(9036), tenant_id: null, data_class: 'config', hot_days: -1, warm_days: -1, cold_days: -1, total_retention_days: -1, legal_citation: 'Indefinite (versioned)', is_active: true, approved_by: 'Compliance', approved_at: '2026-01-15T00:00:00Z', notes: 'Configuration data retained indefinitely — versioned by plan year', created_at: '2026-01-15T00:00:00Z', updated_at: '2026-01-15T00:00:00Z' },
+    { id: bscaUuid(9037), tenant_id: null, data_class: 'cass_cache', hot_days: 90, warm_days: 90, cold_days: 0, total_retention_days: 90, legal_citation: 'Transient', is_active: true, approved_by: 'Engineering', approved_at: '2026-01-15T00:00:00Z', notes: 'Rebuilt per refresh — no long-term value', created_at: '2026-01-15T00:00:00Z', updated_at: '2026-01-15T00:00:00Z' },
+    { id: bscaUuid(9038), tenant_id: null, data_class: 'spatial_index', hot_days: 0, warm_days: 0, cold_days: 0, total_retention_days: 0, legal_citation: 'Rebuilt per refresh', is_active: true, approved_by: 'Engineering', approved_at: '2026-01-15T00:00:00Z', notes: 'No retention — rebuilt from provider_record on every refresh', created_at: '2026-01-15T00:00:00Z', updated_at: '2026-01-15T00:00:00Z' },
+  ],
+
+  archival_schedule: () => [
+    { id: BSCA_IDS.archivalScheduleHotToWarm, job_type: 'hot_to_warm', schedule_name: 'Daily Hot→Warm Transition', cron_expression: '0 2 * * *', timezone: 'America/New_York', is_enabled: true, tenant_id: null, data_class: null, parameters: { max_partitions_per_table: 1 }, max_runtime_minutes: 120, alert_on_failure: true, alert_recipients: 'ops@bsca.com', last_run_at: '2026-04-04T06:00:00Z', last_run_status: 'success', next_run_at: '2026-04-05T06:00:00Z', created_at: '2026-01-15T00:00:00Z', updated_at: '2026-04-04T06:00:15Z' },
+    { id: BSCA_IDS.archivalScheduleWarmToCold, job_type: 'warm_to_cold', schedule_name: 'Monthly Warm→Cold Export', cron_expression: '0 1 1 * *', timezone: 'America/New_York', is_enabled: true, tenant_id: null, data_class: null, parameters: { max_concurrent_exports: 3 }, max_runtime_minutes: 360, alert_on_failure: true, alert_recipients: 'ops@bsca.com,compliance@bsca.com', last_run_at: '2026-04-01T05:00:00Z', last_run_status: 'success', next_run_at: '2026-05-01T05:00:00Z', created_at: '2026-01-15T00:00:00Z', updated_at: '2026-04-01T08:45:00Z' },
+    { id: BSCA_IDS.archivalScheduleSoftPurge, job_type: 'soft_purge', schedule_name: 'Monthly Soft Purge', cron_expression: '0 3 1 * *', timezone: 'America/New_York', is_enabled: true, tenant_id: null, data_class: null, parameters: null, max_runtime_minutes: 120, alert_on_failure: true, alert_recipients: 'ops@bsca.com,compliance@bsca.com', last_run_at: '2026-04-01T07:00:00Z', last_run_status: 'success', next_run_at: '2026-05-01T07:00:00Z', created_at: '2026-01-15T00:00:00Z', updated_at: '2026-04-01T07:45:00Z' },
+    { id: BSCA_IDS.archivalScheduleHardPurge, job_type: 'hard_purge', schedule_name: 'Monthly Hard Purge', cron_expression: '0 4 1 * *', timezone: 'America/New_York', is_enabled: true, tenant_id: null, data_class: null, parameters: null, max_runtime_minutes: 120, alert_on_failure: true, alert_recipients: 'ops@bsca.com,compliance@bsca.com', last_run_at: '2026-04-01T08:00:00Z', last_run_status: 'success', next_run_at: '2026-05-01T08:00:00Z', created_at: '2026-01-15T00:00:00Z', updated_at: '2026-04-01T08:30:00Z' },
+    { id: BSCA_IDS.archivalSchedulePartCreate, job_type: 'partition_create', schedule_name: 'Monthly Partition Pre-Creation', cron_expression: '0 5 1 * *', timezone: 'America/New_York', is_enabled: true, tenant_id: null, data_class: null, parameters: null, max_runtime_minutes: 60, alert_on_failure: true, alert_recipients: 'ops@bsca.com', last_run_at: '2026-04-01T09:00:00Z', last_run_status: 'success', next_run_at: '2026-05-01T09:00:00Z', created_at: '2026-01-15T00:00:00Z', updated_at: '2026-04-01T09:15:00Z' },
+    { id: BSCA_IDS.archivalSchedulePartStats, job_type: 'partition_stats', schedule_name: 'Daily Partition Stats Update', cron_expression: '0 5 * * *', timezone: 'America/New_York', is_enabled: true, tenant_id: null, data_class: null, parameters: null, max_runtime_minutes: 60, alert_on_failure: false, alert_recipients: null, last_run_at: '2026-04-04T09:00:00Z', last_run_status: 'success', next_run_at: '2026-04-05T09:00:00Z', created_at: '2026-01-15T00:00:00Z', updated_at: '2026-04-04T09:45:00Z' },
+    { id: BSCA_IDS.archivalScheduleCassCleanup, job_type: 'cass_cache_cleanup', schedule_name: 'Daily CASS Cache Cleanup', cron_expression: '0 3 * * *', timezone: 'America/New_York', is_enabled: true, tenant_id: null, data_class: null, parameters: null, max_runtime_minutes: 30, alert_on_failure: true, alert_recipients: 'ops@bsca.com', last_run_at: '2026-04-04T07:00:00Z', last_run_status: 'success', next_run_at: '2026-04-05T07:00:00Z', created_at: '2026-01-15T00:00:00Z', updated_at: '2026-04-04T07:10:00Z' },
+    { id: BSCA_IDS.archivalScheduleLockCleanup, job_type: 'lock_cleanup', schedule_name: 'Daily Lock Cleanup', cron_expression: '30 3 * * *', timezone: 'America/New_York', is_enabled: true, tenant_id: null, data_class: null, parameters: null, max_runtime_minutes: 15, alert_on_failure: true, alert_recipients: 'ops@bsca.com', last_run_at: '2026-04-04T07:30:00Z', last_run_status: 'success', next_run_at: '2026-04-05T07:30:00Z', created_at: '2026-01-15T00:00:00Z', updated_at: '2026-04-04T07:32:00Z' },
+    { id: BSCA_IDS.archivalScheduleRestoreCleanup, job_type: 'restore_cleanup', schedule_name: 'Daily Restore Expiry Cleanup', cron_expression: '0 4 * * *', timezone: 'America/New_York', is_enabled: true, tenant_id: null, data_class: null, parameters: null, max_runtime_minutes: 30, alert_on_failure: true, alert_recipients: 'ops@bsca.com', last_run_at: '2026-04-04T08:00:00Z', last_run_status: 'success', next_run_at: '2026-04-05T08:00:00Z', created_at: '2026-01-15T00:00:00Z', updated_at: '2026-04-04T08:05:00Z' },
+    { id: BSCA_IDS.archivalScheduleIntegrity, job_type: 'integrity_check', schedule_name: 'Weekly Integrity Check', cron_expression: '0 2 * * 0', timezone: 'America/New_York', is_enabled: true, tenant_id: null, data_class: null, parameters: { sample_pct: 10 }, max_runtime_minutes: 180, alert_on_failure: true, alert_recipients: 'ops@bsca.com', last_run_at: '2026-03-30T06:00:00Z', last_run_status: 'success', next_run_at: '2026-04-06T06:00:00Z', created_at: '2026-01-15T00:00:00Z', updated_at: '2026-03-30T08:30:00Z' },
+    { id: BSCA_IDS.archivalScheduleCompliance, job_type: 'compliance_report', schedule_name: 'Monthly Compliance Report', cron_expression: '0 6 1 * *', timezone: 'America/New_York', is_enabled: true, tenant_id: null, data_class: null, parameters: null, max_runtime_minutes: 60, alert_on_failure: true, alert_recipients: 'compliance@bsca.com', last_run_at: '2026-04-01T10:00:00Z', last_run_status: 'success', next_run_at: '2026-05-01T10:00:00Z', created_at: '2026-01-15T00:00:00Z', updated_at: '2026-04-01T10:30:00Z' },
+    { id: BSCA_IDS.archivalScheduleGlacier, job_type: 'glacier_transition', schedule_name: 'Quarterly Glacier Transition', cron_expression: '0 1 1 1,4,7,10 *', timezone: 'America/New_York', is_enabled: true, tenant_id: null, data_class: null, parameters: null, max_runtime_minutes: 240, alert_on_failure: true, alert_recipients: 'ops@bsca.com', last_run_at: '2026-04-01T05:00:00Z', last_run_status: 'success', next_run_at: '2026-07-01T05:00:00Z', created_at: '2026-01-15T00:00:00Z', updated_at: '2026-04-01T08:00:00Z' },
+  ],
+
+  partition_registry: () => [
+    { id: bscaUuid(9050), tenant_id: BSCA_IDS.tenant, source_table: 'staging_record', partition_name: 'staging_record_bsca_2026_01', partition_scheme: 'ps_monthly', range_start: '2026-01-01T00:00:00Z', range_end: '2026-02-01T00:00:00Z', storage_tier: 'warm', is_compressed: true, compression_type: 'PAGE', row_count: 161432, size_bytes: 524288000, indexes_active: false, is_exported: false, export_snapshot_id: null, is_dropped: false, dropped_at: null, last_accessed: '2026-03-15T10:00:00Z', stats_updated_at: '2026-04-04T09:00:00Z', created_at: '2025-12-01T09:00:00Z', updated_at: '2026-04-04T09:00:00Z' },
+    { id: bscaUuid(9051), tenant_id: BSCA_IDS.tenant, source_table: 'staging_record', partition_name: 'staging_record_bsca_2026_02', partition_scheme: 'ps_monthly', range_start: '2026-02-01T00:00:00Z', range_end: '2026-03-01T00:00:00Z', storage_tier: 'warm', is_compressed: true, compression_type: 'PAGE', row_count: 161432, size_bytes: 518144000, indexes_active: false, is_exported: false, export_snapshot_id: null, is_dropped: false, dropped_at: null, last_accessed: '2026-03-20T14:00:00Z', stats_updated_at: '2026-04-04T09:00:00Z', created_at: '2026-01-01T09:00:00Z', updated_at: '2026-04-04T09:00:00Z' },
+    { id: bscaUuid(9052), tenant_id: BSCA_IDS.tenant, source_table: 'staging_record', partition_name: 'staging_record_bsca_2026_03', partition_scheme: 'ps_monthly', range_start: '2026-03-01T00:00:00Z', range_end: '2026-04-01T00:00:00Z', storage_tier: 'hot', is_compressed: false, compression_type: null, row_count: 161432, size_bytes: 1073741824, indexes_active: true, is_exported: false, export_snapshot_id: null, is_dropped: false, dropped_at: null, last_accessed: '2026-04-04T10:00:00Z', stats_updated_at: '2026-04-04T09:00:00Z', created_at: '2026-02-01T09:00:00Z', updated_at: '2026-04-04T09:00:00Z' },
+    { id: bscaUuid(9053), tenant_id: BSCA_IDS.tenant, source_table: 'staging_record', partition_name: 'staging_record_bsca_2026_04', partition_scheme: 'ps_monthly', range_start: '2026-04-01T00:00:00Z', range_end: '2026-05-01T00:00:00Z', storage_tier: 'hot', is_compressed: false, compression_type: null, row_count: 42510, size_bytes: 268435456, indexes_active: true, is_exported: false, export_snapshot_id: null, is_dropped: false, dropped_at: null, last_accessed: '2026-04-04T18:00:00Z', stats_updated_at: '2026-04-04T09:00:00Z', created_at: '2026-03-01T09:00:00Z', updated_at: '2026-04-04T09:00:00Z' },
+    { id: bscaUuid(9054), tenant_id: BSCA_IDS.tenant, source_table: 'audit_event', partition_name: 'audit_event_bsca_2026_01', partition_scheme: 'ps_monthly', range_start: '2026-01-01T00:00:00Z', range_end: '2026-02-01T00:00:00Z', storage_tier: 'warm', is_compressed: true, compression_type: 'PAGE', row_count: 85200, size_bytes: 134217728, indexes_active: false, is_exported: false, export_snapshot_id: null, is_dropped: false, dropped_at: null, last_accessed: null, stats_updated_at: '2026-04-04T09:00:00Z', created_at: '2025-12-01T09:00:00Z', updated_at: '2026-04-04T09:00:00Z' },
+    { id: bscaUuid(9055), tenant_id: BSCA_IDS.tenant, source_table: 'audit_event', partition_name: 'audit_event_bsca_2026_04', partition_scheme: 'ps_monthly', range_start: '2026-04-01T00:00:00Z', range_end: '2026-05-01T00:00:00Z', storage_tier: 'hot', is_compressed: false, compression_type: null, row_count: 12800, size_bytes: 33554432, indexes_active: true, is_exported: false, export_snapshot_id: null, is_dropped: false, dropped_at: null, last_accessed: '2026-04-04T18:00:00Z', stats_updated_at: '2026-04-04T09:00:00Z', created_at: '2026-03-01T09:00:00Z', updated_at: '2026-04-04T09:00:00Z' },
+    // Cold-tier partition (exported + dropped)
+    { id: bscaUuid(9056), tenant_id: BSCA_IDS.tenant, source_table: 'staging_record', partition_name: 'staging_record_bsca_2024_01', partition_scheme: 'ps_monthly', range_start: '2024-01-01T00:00:00Z', range_end: '2024-02-01T00:00:00Z', storage_tier: 'warm', is_compressed: true, compression_type: 'PAGE', row_count: 155000, size_bytes: 0, indexes_active: false, is_exported: true, export_snapshot_id: BSCA_IDS.snapshotColdQ12024, is_dropped: true, dropped_at: '2026-02-01T06:30:00Z', last_accessed: null, stats_updated_at: '2026-02-01T06:30:00Z', created_at: '2023-12-01T09:00:00Z', updated_at: '2026-02-01T06:30:00Z' },
+  ],
+
+  partition_creation_schedule: () => [
+    { id: bscaUuid(9060), tenant_id: BSCA_IDS.tenant, source_table: 'staging_record', partition_name: 'staging_record_bsca_2026_05', range_start: '2026-05-01T00:00:00Z', range_end: '2026-06-01T00:00:00Z', scheduled_date: '2026-04-01', is_created: true, created_at: '2026-03-01T09:00:00Z' },
+    { id: bscaUuid(9061), tenant_id: BSCA_IDS.tenant, source_table: 'staging_record', partition_name: 'staging_record_bsca_2026_06', range_start: '2026-06-01T00:00:00Z', range_end: '2026-07-01T00:00:00Z', scheduled_date: '2026-05-01', is_created: false, created_at: '2026-04-01T09:00:00Z' },
+    { id: bscaUuid(9062), tenant_id: BSCA_IDS.tenant, source_table: 'audit_event', partition_name: 'audit_event_bsca_2026_05', range_start: '2026-05-01T00:00:00Z', range_end: '2026-06-01T00:00:00Z', scheduled_date: '2026-04-01', is_created: true, created_at: '2026-03-01T09:00:00Z' },
+    { id: bscaUuid(9063), tenant_id: BSCA_IDS.tenant, source_table: 'quality_result', partition_name: 'quality_result_bsca_2026_05', range_start: '2026-05-01T00:00:00Z', range_end: '2026-06-01T00:00:00Z', scheduled_date: '2026-04-01', is_created: true, created_at: '2026-03-01T09:00:00Z' },
+  ],
+
+  archive_snapshot: () => [
+    // Warm-tier snapshots (compressed DB partitions)
+    { id: BSCA_IDS.snapshotStagingJan, tenant_id: BSCA_IDS.tenant, source_table: 'staging_record', partition_key: '2026-01', data_start_date: '2026-01-01', data_end_date: '2026-01-31', row_count: 161432, size_bytes: 524288000, format: 'db_partition', storage_tier: 'warm', storage_path: 'staging_record_bsca_2026_01', checksum_sha256: 'a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2', checksum_verified: true, compressed: true, encrypted: false, encryption_key_id: null, reason: 'tier_transition', retention_tier: '10_year', expires_at: '2036-01-31T00:00:00Z', legal_hold_id: null, pipeline_job_id: BSCA_IDS.archivalJobHotToWarm, archived_at: '2026-04-02T06:05:00Z', restored_at: null, restored_by: null, restore_expires: null, purged_at: null, purge_confirmed: false, created_at: '2026-04-02T06:05:00Z', updated_at: '2026-04-02T06:05:00Z' },
+    { id: BSCA_IDS.snapshotStagingFeb, tenant_id: BSCA_IDS.tenant, source_table: 'staging_record', partition_key: '2026-02', data_start_date: '2026-02-01', data_end_date: '2026-02-28', row_count: 161432, size_bytes: 518144000, format: 'db_partition', storage_tier: 'warm', storage_path: 'staging_record_bsca_2026_02', checksum_sha256: 'b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3', checksum_verified: true, compressed: true, encrypted: false, encryption_key_id: null, reason: 'tier_transition', retention_tier: '10_year', expires_at: '2036-02-28T00:00:00Z', legal_hold_id: null, pipeline_job_id: BSCA_IDS.archivalJobHotToWarm, archived_at: '2026-04-02T06:08:00Z', restored_at: null, restored_by: null, restore_expires: null, purged_at: null, purge_confirmed: false, created_at: '2026-04-02T06:08:00Z', updated_at: '2026-04-02T06:08:00Z' },
+    { id: BSCA_IDS.snapshotAuditJan, tenant_id: BSCA_IDS.tenant, source_table: 'audit_event', partition_key: '2026-01', data_start_date: '2026-01-01', data_end_date: '2026-01-31', row_count: 85200, size_bytes: 134217728, format: 'db_partition', storage_tier: 'warm', storage_path: 'audit_event_bsca_2026_01', checksum_sha256: 'c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4', checksum_verified: true, compressed: true, encrypted: false, encryption_key_id: null, reason: 'tier_transition', retention_tier: '10_year', expires_at: '2036-01-31T00:00:00Z', legal_hold_id: null, pipeline_job_id: BSCA_IDS.archivalJobHotToWarm, archived_at: '2026-04-02T06:12:00Z', restored_at: null, restored_by: null, restore_expires: null, purged_at: null, purge_confirmed: false, created_at: '2026-04-02T06:12:00Z', updated_at: '2026-04-02T06:12:00Z' },
+    // Cold-tier snapshot (Parquet on S3)
+    { id: BSCA_IDS.snapshotColdQ12024, tenant_id: BSCA_IDS.tenant, source_table: 'staging_record', partition_key: '2024-01', data_start_date: '2024-01-01', data_end_date: '2024-01-31', row_count: 155000, size_bytes: 89128960, format: 'parquet', storage_tier: 'cold', storage_path: 's3://bsca-archive/archive/BSCA/staging_record/2024/2024-01.parquet', checksum_sha256: 'd4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5', checksum_verified: true, compressed: true, encrypted: true, encryption_key_id: 'arn:aws:kms:us-west-2:123:key/archival-bsca', reason: 'tier_transition', retention_tier: '10_year', expires_at: '2034-01-31T00:00:00Z', legal_hold_id: null, pipeline_job_id: BSCA_IDS.archivalJobWarmToCold, archived_at: '2026-02-01T06:00:00Z', restored_at: null, restored_by: null, restore_expires: null, purged_at: null, purge_confirmed: false, created_at: '2026-02-01T06:00:00Z', updated_at: '2026-02-01T06:30:00Z' },
+  ],
+
+  legal_hold: () => [
+    { id: BSCA_IDS.legalHoldOig, tenant_id: BSCA_IDS.tenant, hold_name: 'OIG Investigation 2026-001 — BSCA Network Adequacy Review', hold_type: 'investigation', scope: 'provider_refresh,audit_event', scope_start: '2025-01-01', scope_end: '2026-03-31', issued_by: 'General Counsel (Office of Inspector General notice)', issued_at: '2026-03-15T14:00:00Z', expected_duration_days: 180, released_at: null, released_by: null, release_reason: null, notes: 'OIG reviewing BSCA provider network adequacy for MA plans during PY2025-2026. All provider refresh data and audit events within scope period must be retained until investigation concludes.', notification_sent: true, is_active: true, created_at: '2026-03-15T14:00:00Z', updated_at: '2026-03-15T14:00:00Z' },
+  ],
+
+  archival_job: () => [
+    // Recent daily Hot→Warm (completed successfully)
+    { id: BSCA_IDS.archivalJobHotToWarm, job_type: 'hot_to_warm', job_name: 'hot_to_warm_2026_04_04', trigger_type: 'scheduled', tenant_id: null, data_class: null, parameters: { max_partitions_per_table: 1 }, status: 'success', total_items: 3, processed_items: 3, failed_items: 0, skipped_items: 0, error_message: null, retry_count: 0, max_retries: 3, last_retry_at: null, started_at: '2026-04-04T06:00:00Z', completed_at: '2026-04-04T06:15:00Z', next_run_at: '2026-04-05T06:00:00Z', created_at: '2026-04-04T06:00:00Z', created_by: 'SYSTEM' },
+    // Monthly Warm→Cold (completed with 1 skip due to legal hold)
+    { id: BSCA_IDS.archivalJobWarmToCold, job_type: 'warm_to_cold', job_name: 'warm_to_cold_2026_04_01', trigger_type: 'scheduled', tenant_id: null, data_class: null, parameters: { max_concurrent_exports: 3 }, status: 'partial', total_items: 4, processed_items: 3, failed_items: 0, skipped_items: 1, error_message: null, retry_count: 0, max_retries: 3, last_retry_at: null, started_at: '2026-04-01T05:00:00Z', completed_at: '2026-04-01T08:45:00Z', next_run_at: '2026-05-01T05:00:00Z', created_at: '2026-04-01T05:00:00Z', created_by: 'SYSTEM' },
+    // Monthly soft purge
+    { id: BSCA_IDS.archivalJobSoftPurge, job_type: 'soft_purge', job_name: 'soft_purge_2026_04_01', trigger_type: 'scheduled', tenant_id: null, data_class: null, parameters: null, status: 'success', total_items: 0, processed_items: 0, failed_items: 0, skipped_items: 0, error_message: null, retry_count: 0, max_retries: 3, last_retry_at: null, started_at: '2026-04-01T07:00:00Z', completed_at: '2026-04-01T07:02:00Z', next_run_at: '2026-05-01T07:00:00Z', created_at: '2026-04-01T07:00:00Z', created_by: 'SYSTEM' },
+    // Partition pre-creation
+    { id: BSCA_IDS.archivalJobPartCreate, job_type: 'partition_create', job_name: 'partition_create_2026_04_01', trigger_type: 'scheduled', tenant_id: null, data_class: null, parameters: null, status: 'success', total_items: 7, processed_items: 7, failed_items: 0, skipped_items: 0, error_message: null, retry_count: 0, max_retries: 3, last_retry_at: null, started_at: '2026-04-01T09:00:00Z', completed_at: '2026-04-01T09:05:00Z', next_run_at: '2026-05-01T09:00:00Z', created_at: '2026-04-01T09:00:00Z', created_by: 'SYSTEM' },
+    // Weekly integrity check
+    { id: BSCA_IDS.archivalJobIntegrity, job_type: 'integrity_check', job_name: 'integrity_check_2026_03_30', trigger_type: 'scheduled', tenant_id: null, data_class: null, parameters: { sample_pct: 10 }, status: 'success', total_items: 3, processed_items: 3, failed_items: 0, skipped_items: 0, error_message: null, retry_count: 0, max_retries: 3, last_retry_at: null, started_at: '2026-03-30T06:00:00Z', completed_at: '2026-03-30T08:30:00Z', next_run_at: '2026-04-06T06:00:00Z', created_at: '2026-03-30T06:00:00Z', created_by: 'SYSTEM' },
+    // Monthly compliance report
+    { id: BSCA_IDS.archivalJobCompliance, job_type: 'compliance_report', job_name: 'compliance_report_2026_04_01', trigger_type: 'scheduled', tenant_id: null, data_class: null, parameters: null, status: 'success', total_items: 1, processed_items: 1, failed_items: 0, skipped_items: 0, error_message: null, retry_count: 0, max_retries: 3, last_retry_at: null, started_at: '2026-04-01T10:00:00Z', completed_at: '2026-04-01T10:15:00Z', next_run_at: '2026-05-01T10:00:00Z', created_at: '2026-04-01T10:00:00Z', created_by: 'SYSTEM' },
+  ],
+
+  archival_job_step: () => [
+    // Steps from Hot→Warm job (3 partitions compressed)
+    { id: bscaUuid(9070), job_id: BSCA_IDS.archivalJobHotToWarm, step_order: 1, step_name: 'compress_staging_record_bsca_2026_01', step_type: 'compress', target_table: 'staging_record', target_partition: 'staging_record_bsca_2026_01', target_path: null, archive_snapshot_id: BSCA_IDS.snapshotStagingJan, status: 'success', error_message: null, retry_count: 0, input_row_count: 161432, output_row_count: 161432, input_size_bytes: 1073741824, output_size_bytes: 524288000, checksum: null, duration_seconds: 245, started_at: '2026-04-04T06:00:10Z', completed_at: '2026-04-04T06:04:15Z', created_at: '2026-04-04T06:00:10Z' },
+    { id: bscaUuid(9071), job_id: BSCA_IDS.archivalJobHotToWarm, step_order: 2, step_name: 'compress_staging_record_bsca_2026_02', step_type: 'compress', target_table: 'staging_record', target_partition: 'staging_record_bsca_2026_02', target_path: null, archive_snapshot_id: BSCA_IDS.snapshotStagingFeb, status: 'success', error_message: null, retry_count: 0, input_row_count: 161432, output_row_count: 161432, input_size_bytes: 1073741824, output_size_bytes: 518144000, checksum: null, duration_seconds: 238, started_at: '2026-04-04T06:04:20Z', completed_at: '2026-04-04T06:08:18Z', created_at: '2026-04-04T06:04:20Z' },
+    { id: bscaUuid(9072), job_id: BSCA_IDS.archivalJobHotToWarm, step_order: 3, step_name: 'compress_audit_event_bsca_2026_01', step_type: 'compress', target_table: 'audit_event', target_partition: 'audit_event_bsca_2026_01', target_path: null, archive_snapshot_id: BSCA_IDS.snapshotAuditJan, status: 'success', error_message: null, retry_count: 0, input_row_count: 85200, output_row_count: 85200, input_size_bytes: 268435456, output_size_bytes: 134217728, checksum: null, duration_seconds: 120, started_at: '2026-04-04T06:08:25Z', completed_at: '2026-04-04T06:10:25Z', created_at: '2026-04-04T06:08:25Z' },
+    // Steps from Warm→Cold job (export + verify + drop, plus 1 skipped for legal hold)
+    { id: bscaUuid(9073), job_id: BSCA_IDS.archivalJobWarmToCold, step_order: 1, step_name: 'export_staging_record_bsca_2024_01', step_type: 'export', target_table: 'staging_record', target_partition: 'staging_record_bsca_2024_01', target_path: 's3://bsca-archive/archive/BSCA/staging_record/2024/2024-01.parquet', archive_snapshot_id: BSCA_IDS.snapshotColdQ12024, status: 'success', error_message: null, retry_count: 0, input_row_count: 155000, output_row_count: 155000, input_size_bytes: 502000000, output_size_bytes: 89128960, checksum: 'd4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5', duration_seconds: 1800, started_at: '2026-04-01T05:05:00Z', completed_at: '2026-04-01T05:35:00Z', created_at: '2026-04-01T05:05:00Z' },
+    { id: bscaUuid(9074), job_id: BSCA_IDS.archivalJobWarmToCold, step_order: 2, step_name: 'skip_legal_hold_staging_record_bsca_2025_03', step_type: 'skip', target_table: 'staging_record', target_partition: 'staging_record_bsca_2025_03', target_path: null, archive_snapshot_id: null, status: 'skipped', error_message: 'Active legal hold: OIG Investigation 2026-001 — scope covers 2025-01 to 2026-03', retry_count: 0, input_row_count: null, output_row_count: null, input_size_bytes: null, output_size_bytes: null, checksum: null, duration_seconds: 0, started_at: '2026-04-01T05:35:05Z', completed_at: '2026-04-01T05:35:05Z', created_at: '2026-04-01T05:35:05Z' },
+  ],
+
+  archival_transition_log: () => [
+    { id: bscaUuid(9080), archive_snapshot_id: BSCA_IDS.snapshotStagingJan, tenant_id: BSCA_IDS.tenant, source_table: 'staging_record', from_tier: 'hot', to_tier: 'warm', action: 'compress', row_count: 161432, size_before_bytes: 1073741824, size_after_bytes: 524288000, compression_ratio: 0.49, checksum_source: null, checksum_dest: null, checksum_match: null, storage_path_from: 'staging_record_bsca_2026_01', storage_path_to: 'staging_record_bsca_2026_01', pipeline_job_id: BSCA_IDS.archivalJobHotToWarm, duration_seconds: 245, error_message: null, status: 'success', started_at: '2026-04-04T06:00:10Z', completed_at: '2026-04-04T06:04:15Z', created_at: '2026-04-04T06:04:15Z' },
+    { id: bscaUuid(9081), archive_snapshot_id: BSCA_IDS.snapshotColdQ12024, tenant_id: BSCA_IDS.tenant, source_table: 'staging_record', from_tier: 'warm', to_tier: 'cold', action: 'export_parquet', row_count: 155000, size_before_bytes: 502000000, size_after_bytes: 89128960, compression_ratio: 0.18, checksum_source: 'e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6', checksum_dest: 'd4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5', checksum_match: true, storage_path_from: 'staging_record_bsca_2024_01', storage_path_to: 's3://bsca-archive/archive/BSCA/staging_record/2024/2024-01.parquet', pipeline_job_id: BSCA_IDS.archivalJobWarmToCold, duration_seconds: 1800, error_message: null, status: 'success', started_at: '2026-04-01T05:05:00Z', completed_at: '2026-04-01T05:35:00Z', created_at: '2026-04-01T05:35:00Z' },
+    { id: bscaUuid(9082), archive_snapshot_id: BSCA_IDS.snapshotColdQ12024, tenant_id: BSCA_IDS.tenant, source_table: 'staging_record', from_tier: 'warm', to_tier: 'cold', action: 'drop_partition', row_count: 155000, size_before_bytes: 502000000, size_after_bytes: 0, compression_ratio: 0.00, checksum_source: null, checksum_dest: null, checksum_match: null, storage_path_from: 'staging_record_bsca_2024_01', storage_path_to: null, pipeline_job_id: BSCA_IDS.archivalJobWarmToCold, duration_seconds: 5, error_message: null, status: 'success', started_at: '2026-04-01T05:35:10Z', completed_at: '2026-04-01T05:35:15Z', created_at: '2026-04-01T05:35:15Z' },
+  ],
+
+  archival_lock: () => [
+    { id: bscaUuid(9090), lock_key: 'scheduler', owner_id: 'archival-service-pod-1', lock_type: 'exclusive', acquired_at: '2026-04-04T06:00:00Z', expires_at: '2026-04-04T06:05:00Z', heartbeat_at: '2026-04-04T06:04:30Z', metadata: { hostname: 'archival-pod-1', pid: 12345 }, created_at: '2026-04-04T06:00:00Z' },
+  ],
+
+  restore_request: () => [
+    { id: BSCA_IDS.restoreReq1, tenant_id: BSCA_IDS.tenant, source_table: 'staging_record', date_range_start: '2024-01-01', date_range_end: '2024-01-31', requested_by: 'jlynn@bsca.com', status: 'available', restored_table_name: 'restored_staging_record_' + BSCA_IDS.restoreReq1.slice(0, 8), archive_snapshot_ids: [BSCA_IDS.snapshotColdQ12024], row_count: 155000, size_bytes: 502000000, expires_at: '2026-04-11T10:00:00Z', error_message: null, created_at: '2026-04-04T10:00:00Z', completed_at: '2026-04-04T10:15:00Z', cleaned_up_at: null },
+  ],
+
+  compliance_report: () => [
+    {
+      id: BSCA_IDS.complianceReport202603,
+      report_period_start: '2026-03-01',
+      report_period_end: '2026-03-31',
+      generated_at: '2026-04-01T10:15:00Z',
+      generated_by: 'SYSTEM',
+      report_data: {
+        hot_tier: { tables: 7, partitions: 14, total_gb: 8.2 },
+        warm_tier: { tables: 7, partitions: 28, total_gb: 4.1 },
+        cold_tier: { tables: 3, partitions: 12, total_gb: 1.2, format: 'parquet' },
+        archive_tier: { tables: 0, partitions: 0, total_gb: 0 },
+        transitions_this_month: { hot_to_warm: 6, warm_to_cold: 3, purged: 0 },
+        policy_adherence_pct: 100.0,
+        upcoming_purges_90d: [],
+        failed_operations: 0,
+        integrity_pass_rate: 100.0,
+      },
+      tenant_summary: {
+        BSCA: { hot_gb: 8.2, warm_gb: 4.1, cold_gb: 1.2, archive_gb: 0, compliance_pct: 100.0 },
+      },
+      legal_holds_active: 1,
+      total_snapshots: 4,
+      total_storage_bytes: 14495514624,
+      compliance_status: 'compliant',
+      notes: 'All tenants compliant. 1 active legal hold (OIG Investigation 2026-001) — no purge impact this period.',
+      created_at: '2026-04-01T10:15:00Z',
+    },
+  ],
+
+  integrity_check_result: () => [
+    { id: BSCA_IDS.integrityCheck1, archive_snapshot_id: BSCA_IDS.snapshotColdQ12024, checked_at: '2026-03-30T06:15:00Z', check_type: 'checksum', expected_checksum: 'd4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5', actual_checksum: 'd4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5', checksum_match: true, row_count_match: true, expected_row_count: 155000, actual_row_count: 155000, sample_rows_checked: 1000, sample_rows_matched: 1000, storage_path: 's3://bsca-archive/archive/BSCA/staging_record/2024/2024-01.parquet', file_size_bytes: 89128960, duration_seconds: 45, error_message: null, status: 'passed', created_at: '2026-03-30T06:15:00Z' },
+    { id: BSCA_IDS.integrityCheck2, archive_snapshot_id: BSCA_IDS.snapshotStagingJan, checked_at: '2026-03-30T06:20:00Z', check_type: 'row_count', expected_checksum: 'a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2', actual_checksum: 'a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2', checksum_match: true, row_count_match: true, expected_row_count: 161432, actual_row_count: 161432, sample_rows_checked: 0, sample_rows_matched: 0, storage_path: 'staging_record_bsca_2026_01', file_size_bytes: 524288000, duration_seconds: 12, error_message: null, status: 'passed', created_at: '2026-03-30T06:20:00Z' },
+    { id: BSCA_IDS.integrityCheck3, archive_snapshot_id: BSCA_IDS.snapshotStagingFeb, checked_at: '2026-03-30T06:25:00Z', check_type: 'sample_verify', expected_checksum: 'b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3', actual_checksum: 'b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3d4e5f6a1b2c3', checksum_match: true, row_count_match: true, expected_row_count: 161432, actual_row_count: 161432, sample_rows_checked: 500, sample_rows_matched: 500, storage_path: 'staging_record_bsca_2026_02', file_size_bytes: 518144000, duration_seconds: 28, error_message: null, status: 'passed', created_at: '2026-03-30T06:25:00Z' },
+  ],
 };
 
 export function getBscaRows(tableId) {
@@ -1926,6 +2383,7 @@ export const BSCA_PIPELINE_NOTES = {
     'docs/design/rules/rules-station-design.md',
     'docs/design/aep/aep-station-design.md',
     'docs/design/output/output-service-design.md',
+    'docs/design/archival/archival-service-design.md',
     'uml-pipeline/src/data/designTables.js',
     'docs/schema-design-v4.md',
   ],

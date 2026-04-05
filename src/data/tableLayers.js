@@ -21,6 +21,13 @@ export const TABLE_LAYERS = {
     description:
       'Runtime rows for one execution: jobs, file import, ingestion, staging, CASS, quality, recon, spatial indexes, audit, API logs.',
   },
+  archival: {
+    name: 'Archival / Lifecycle',
+    shortName: 'Archival',
+    color: '#14b8a6',
+    description:
+      'Data lifecycle management: retention policies, partition registry, tier transitions (Hot→Warm→Cold→Archive→Purge), legal holds, compliance reports, integrity checks, and restore-on-request. Independent service — never affects main pipeline.',
+  },
   admin_rbac: {
     name: 'Admin / RBAC',
     shortName: 'Admin',

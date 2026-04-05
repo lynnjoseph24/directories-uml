@@ -52,7 +52,7 @@ export default function BscaPipelineExplorer() {
           <h1 className="bsca-explorer-title">BSCA pipeline tables</h1>
           <p className="bsca-explorer-sub">
             Tables are grouped as <strong>Master table load</strong> → <strong>Tenant setup</strong> →{' '}
-            <strong>Pipeline run</strong> → <strong>Admin / RBAC</strong> → <strong>UI / Frontend</strong>, in the order data is affected. Metadata: <code>designTables.js</code>{' '}
+            <strong>Pipeline run</strong> → <strong>Archival / Lifecycle</strong> → <strong>Admin / RBAC</strong> → <strong>UI / Frontend</strong>, in the order data is affected. Metadata: <code>designTables.js</code>{' '}
             ({TABLES.length} tables). Sample: <strong>100</strong> <code>staging_record</code> /{' '}
             <code>cass_result</code> rows; <strong>25</strong> <code>provider_record</code> rows.
           </p>

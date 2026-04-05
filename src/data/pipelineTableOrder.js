@@ -3,9 +3,9 @@
  * Phases: master_load → tenant_setup → pipeline_run (chronological execution).
  */
 
-export const PHASE_KEYS = ['master_load', 'tenant_setup', 'pipeline_run', 'admin_rbac', 'ui_frontend'];
+export const PHASE_KEYS = ['master_load', 'tenant_setup', 'pipeline_run', 'archival', 'admin_rbac', 'ui_frontend'];
 
-/** @type {{ id: string, phase: 'master_load' | 'tenant_setup' | 'pipeline_run' | 'admin_rbac' | 'ui_frontend' }[]} */
+/** @type {{ id: string, phase: 'master_load' | 'tenant_setup' | 'pipeline_run' | 'archival' | 'admin_rbac' | 'ui_frontend' }[]} */
 const PIPELINE_TABLES = [
   // --- Master table load (reference / global seeds) ---
   { id: 'schema_version', phase: 'master_load' },
@@ -15,10 +15,13 @@ const PIPELINE_TABLES = [
   { id: 'network_type', phase: 'master_load' },
   { id: 'enrollment_period_ref', phase: 'master_load' },
   { id: 'canonical_field', phase: 'master_load' },
+  { id: 'supported_file_format', phase: 'master_load' },
   { id: 'udf_function', phase: 'master_load' },
   { id: 'cass_error_code', phase: 'master_load' },
   { id: 'geocode_fallback_ref', phase: 'master_load' },
   { id: 'component_template', phase: 'master_load' },
+  { id: 'app_version', phase: 'master_load' },
+  { id: 'run_status', phase: 'master_load' },
 
   // --- Tenant setup (configuration before a run) ---
   { id: 'tenant', phase: 'tenant_setup' },
@@ -54,10 +57,17 @@ const PIPELINE_TABLES = [
   { id: 'book_translation', phase: 'tenant_setup' },
   { id: 'book_geography', phase: 'tenant_setup' },
   { id: 'book_chapter', phase: 'tenant_setup' },
+  { id: 'book_enclosure', phase: 'tenant_setup' },
   { id: 'output_config', phase: 'tenant_setup' },
   { id: 'output_response_template', phase: 'tenant_setup' },
   { id: 'api_client', phase: 'tenant_setup' },
   { id: 'api_request_schema', phase: 'tenant_setup' },
+  { id: 'alert_definition', phase: 'tenant_setup' },
+  { id: 'alert_notification_link', phase: 'tenant_setup' },
+  { id: 'notification_channel', phase: 'tenant_setup' },
+  { id: 'notification_rule', phase: 'tenant_setup' },
+  { id: 'station_type_registry', phase: 'tenant_setup' },
+  { id: 'component_type_registry', phase: 'tenant_setup' },
   { id: 'recon_rule', phase: 'tenant_setup' },
 
   // --- Pipeline run (runtime — order follows station flow: intake → ingestion → … → output API) ---
@@ -103,6 +113,25 @@ const PIPELINE_TABLES = [
   { id: 'idempotency_cache', phase: 'pipeline_run' },
   { id: 'rate_limit_counter', phase: 'pipeline_run' },
   { id: 'api_access_token', phase: 'pipeline_run' },
+  { id: 'alert_instance', phase: 'pipeline_run' },
+  { id: 'notification_log', phase: 'pipeline_run' },
+  { id: 'webhook_delivery', phase: 'pipeline_run' },
+
+
+  // --- Archival / Lifecycle (independent service — data tier transitions, legal holds, compliance) ---
+  { id: 'retention_policy', phase: 'archival' },
+  { id: 'archival_schedule', phase: 'archival' },
+  { id: 'partition_registry', phase: 'archival' },
+  { id: 'partition_creation_schedule', phase: 'archival' },
+  { id: 'archive_snapshot', phase: 'archival' },
+  { id: 'legal_hold', phase: 'archival' },
+  { id: 'archival_job', phase: 'archival' },
+  { id: 'archival_job_step', phase: 'archival' },
+  { id: 'archival_transition_log', phase: 'archival' },
+  { id: 'archival_lock', phase: 'archival' },
+  { id: 'restore_request', phase: 'archival' },
+  { id: 'compliance_report', phase: 'archival' },
+  { id: 'integrity_check_result', phase: 'archival' },
 
   // --- Admin / RBAC (schema: admin — authentication, authorization, audit) ---
   { id: 'app_user', phase: 'admin_rbac' },
@@ -132,5 +161,5 @@ export const PIPELINE_ORDER_INDEX = new Map(
   ORDERED_PIPELINE_TABLE_IDS.map((id, i) => [id, i])
 );
 
-/** @type {Map<string, 'master_load' | 'tenant_setup' | 'pipeline_run' | 'admin_rbac' | 'ui_frontend'>} */
+/** @type {Map<string, 'master_load' | 'tenant_setup' | 'pipeline_run' | 'archival' | 'admin_rbac' | 'ui_frontend'>} */
 export const PHASE_BY_TABLE_ID = new Map(PIPELINE_TABLES.map((x) => [x.id, x.phase]));
