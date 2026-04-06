@@ -326,6 +326,110 @@
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
+.flow-table-row.clickable { cursor: pointer; }
+.flow-table-row.clickable:hover { background: rgba(56, 189, 248, 0.06); border-color: rgba(56, 189, 248, 0.25); }
+.flow-table-row.expanded { border-color: rgba(56, 189, 248, 0.4); background: rgba(56, 189, 248, 0.05); }
+
+.flow-table-expand {
+  font-size: 0.65rem;
+  color: #38bdf8;
+  margin-left: auto;
+  flex-shrink: 0;
+}
+
+.flow-tables-hint {
+  font-weight: 400;
+  font-size: 0.6rem;
+  color: #475569;
+  text-transform: none;
+  letter-spacing: normal;
+  margin-left: 0.4rem;
+}
+
+.flow-table-entry { display: flex; flex-direction: column; gap: 0; }
+
+/* ── Table Preview (inline data grid) ── */
+.flow-preview-wrap {
+  margin: 0 0 0.35rem;
+  border: 1px solid rgba(56, 189, 248, 0.15);
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  background: #020617;
+  overflow: hidden;
+}
+
+.flow-preview-meta {
+  padding: 0.35rem 0.6rem;
+  font-size: 0.65rem;
+  color: #64748b;
+  border-bottom: 1px solid rgba(51, 65, 85, 0.5);
+}
+
+.flow-preview-meta code {
+  color: #7dd3fc;
+  font-size: 0.63rem;
+}
+
+.flow-preview-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.flow-preview-grid {
+  border-collapse: collapse;
+  font-size: 0.65rem;
+  min-width: max-content;
+  width: 100%;
+}
+
+.flow-preview-grid th,
+.flow-preview-grid td {
+  border: 1px solid rgba(51, 65, 85, 0.6);
+  padding: 0.25rem 0.45rem;
+  vertical-align: top;
+  max-width: 220px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.flow-preview-grid th {
+  position: sticky;
+  top: 0;
+  background: #0f172a;
+  color: #64748b;
+  font-weight: 600;
+  text-align: left;
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.flow-preview-grid td {
+  background: rgba(2, 6, 23, 0.8);
+  color: #94a3b8;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.flow-preview-grid tr:nth-child(even) td {
+  background: rgba(15, 23, 42, 0.6);
+}
+
+.flow-preview-more {
+  padding: 0.3rem 0.6rem;
+  font-size: 0.6rem;
+  color: #475569;
+  text-align: right;
+  border-top: 1px solid rgba(51, 65, 85, 0.4);
+}
+
+.flow-preview-empty {
+  padding: 0.5rem 0.6rem;
+  font-size: 0.68rem;
+  color: #475569;
+  font-style: italic;
+}
+
 /* ── Operations block ── */
 .flow-ops-block {
   margin: 0 0 1rem;

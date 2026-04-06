@@ -1,4 +1,6 @@
 import { useState, useMemo } from 'react';
+import { getTableById } from './data/tables';
+import { getBscaRows } from './data/bscaPipelineData';
 import './FlowExplorer.css';
 
 /* ────────────────────────────────────────────────────────────
@@ -509,9 +511,45 @@ const FLOWS = [
 /* ════════════════════════════════════════════════════════════
    COMPONENT
    ════════════════════════════════════════════════════════════ */
+function formatCellValue(val) {
+  if (val === null || val === undefined) return '—';
+  if (typeof val === 'object') return JSON.stringify(val);
+  const s = String(val);
+  return s.length > 80 ? s.slice(0, 77) + '…' : s;
+}
+
+function TablePreview({ tableId }) {
+  const tableDef = getTableById(tableId);
+  const rows = useMemo(() => getBscaRows(tableId), [tableId]);
+  if (!tableDef || rows.length === 0) return <div className="flow-preview-empty">No sample data for {tableId}</div>;
+  const cols = tableDef.columns?.map((c) => c.name) ?? Object.keys(rows[0] ?? {});
+  const previewRows = rows.slice(0, 5);
+  return (
+    <div className="flow-preview-wrap">
+      <div className="flow-preview-meta">
+        Showing {previewRows.length} of {rows.length} sample rows from <code>{tableDef.schema ? `${tableDef.schema}.` : ''}{tableDef.name}</code>
+      </div>
+      <div className="flow-preview-scroll">
+        <table className="flow-preview-grid">
+          <thead>
+            <tr>{cols.map((c) => <th key={c}>{c}</th>)}</tr>
+          </thead>
+          <tbody>
+            {previewRows.map((row, ri) => (
+              <tr key={ri}>{cols.map((c) => <td key={c} title={String(row[c] ?? '')}>{formatCellValue(row[c])}</td>)}</tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      {rows.length > 5 && <div className="flow-preview-more">+ {rows.length - 5} more rows</div>}
+    </div>
+  );
+}
+
 export default function FlowExplorer() {
   const [activeFlow, setActiveFlow] = useState('refresh');
   const [activeStep, setActiveStep] = useState(0);
+  const [expandedTable, setExpandedTable] = useState(null);
 
   const flow = FLOWS.find((f) => f.id === activeFlow);
   const steps = flow?.steps ?? [];
@@ -535,7 +573,7 @@ export default function FlowExplorer() {
           <button
             key={f.id}
             className={`flow-tab ${activeFlow === f.id ? 'active' : ''}`}
-            onClick={() => { setActiveFlow(f.id); setActiveStep(0); }}
+            onClick={() => { setActiveFlow(f.id); setActiveStep(0); setExpandedTable(null); }}
           >
             <span className="flow-tab-icon">{f.icon}</span>
             <span className="flow-tab-label">{f.label}</span>
@@ -551,7 +589,7 @@ export default function FlowExplorer() {
             <button
               key={s.id}
               className={`flow-step-btn ${activeStep === i ? 'active' : ''} ${i < activeStep ? 'done' : ''}`}
-              onClick={() => setActiveStep(i)}
+              onClick={() => { setActiveStep(i); setExpandedTable(null); }}
             >
               <div className="flow-step-connector" style={{ background: i === 0 ? 'transparent' : (i <= activeStep ? s.color : '#334155') }} />
               <div className="flow-step-dot" style={{ background: i <= activeStep ? s.color : '#334155', boxShadow: activeStep === i ? `0 0 0 4px ${s.color}33` : 'none' }}>
@@ -594,15 +632,27 @@ export default function FlowExplorer() {
               {/* Table operations */}
               {step.tables.length > 0 && (
                 <div className="flow-tables-block">
-                  <span className="flow-tables-label">Tables Touched</span>
+                  <span className="flow-tables-label">Tables Touched <span className="flow-tables-hint">(click a table to see sample records)</span></span>
                   <div className="flow-table-list">
-                    {step.tables.map((t, i) => (
-                      <div key={`${t.name}-${i}`} className={`flow-table-row flow-table-op-${(t.op || 'READ').toLowerCase()}`}>
-                        <span className="flow-table-op">{t.op || 'READ'}</span>
-                        <span className="flow-table-name">{t.name}</span>
-                        <span className="flow-table-rows">{t.rows || ''}</span>
-                      </div>
-                    ))}
+                    {step.tables.map((t, i) => {
+                      const key = `${t.name}-${i}`;
+                      const isExpanded = expandedTable === key;
+                      const hasData = getBscaRows(t.name).length > 0;
+                      return (
+                        <div key={key} className="flow-table-entry">
+                          <div
+                            className={`flow-table-row flow-table-op-${(t.op || 'READ').toLowerCase()} ${hasData ? 'clickable' : ''} ${isExpanded ? 'expanded' : ''}`}
+                            onClick={() => hasData && setExpandedTable(isExpanded ? null : key)}
+                          >
+                            <span className="flow-table-op">{t.op || 'READ'}</span>
+                            <span className="flow-table-name">{t.name}</span>
+                            {hasData && <span className="flow-table-expand">{isExpanded ? '▾' : '▸'}</span>}
+                            <span className="flow-table-rows">{t.rows || ''}</span>
+                          </div>
+                          {isExpanded && <TablePreview tableId={t.name} />}
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
               )}
@@ -620,14 +670,14 @@ export default function FlowExplorer() {
                 <button
                   className="flow-nav-btn"
                   disabled={activeStep === 0}
-                  onClick={() => setActiveStep((s) => s - 1)}
+                  onClick={() => { setActiveStep((s) => s - 1); setExpandedTable(null); }}
                 >
                   ← Previous
                 </button>
                 <button
                   className="flow-nav-btn primary"
                   disabled={activeStep === steps.length - 1}
-                  onClick={() => setActiveStep((s) => s + 1)}
+                  onClick={() => { setActiveStep((s) => s + 1); setExpandedTable(null); }}
                 >
                   Next →
                 </button>
