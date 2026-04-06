@@ -2051,24 +2051,21 @@ export const DESIGN_TABLES = [
     ],
   },
 
-  // ── Language Routing (output-service-design.md — member language → book mapping) ──
+  // ── Language Routing (output-service-design.md — member language → chapter label language + enclosure language) ──
   {
     id: 'language_routing_rule',
     name: 'language_routing_rule',
     schema: 'rules',
-    sourceDoc: 'docs/design/output/output-service-design.md',
+    sourceDoc: 'docs/design/output/directory-configuration-and-request-flow.md',
     description:
-      'Maps member language code to a specific book + routing type. Replaces legacy hardcoded IF/ELSE language routing in stored procedures. BSCA has 4 patterns: dedicated_book (Duals_LA — 12 books per language), bilingual_only (IMAPDHMO EN/SP members), bilingual_with_cover (IMAPDHMO non-EN/SP members → bilingual book + CQFluency cover letter). CQFluency is a separate downstream translation service — it generates cover letters, NOT directory data.',
+      'Maps member language code to a routing type that controls chapter label language and enclosure language. Two routing types: "bilingual" = chapter labels in EN01+SP01 side by side, enclosures in EN01SP01 (IMAPDHMO, GMAPDPPO, DIMAPDHMO, Accu, Vision); "dedicated" = chapter labels in member\'s own language, enclosures in that language (Duals_LA, Duals_SD, MdCal_LA, MdCal_SD). Used by BOTH radius and full directory queries — same lookup, same result. CQFluency/cover letters are NOT part of directories (verified: legacy LT* SPs have zero cross-references to Rd* directory SPs).',
     columns: [
       col('id', 'UUID', { pk: true }),
       col('product_plan_year_id', 'UUID', { fk: 'product_plan_year', description: 'Which product+year this routing applies to' }),
       col('member_language_code', 'VARCHAR(10)', { description: 'EN01, SP01, KO01, AR01, AM01, VI01, CH04, etc.' }),
-      col('book_id', 'UUID', { fk: 'book', description: 'Which book to serve for this language' }),
-      col('routing_type', 'VARCHAR(30)', { description: 'dedicated_book | bilingual_with_cover | bilingual_only' }),
-      col('cover_letter_language_id', 'UUID', { fk: 'language', description: 'Language for CQFluency cover letter (NULL if routing_type != bilingual_with_cover)' }),
-      col('cover_letter_template', 'VARCHAR(200)', { description: 'CQFluency template name from LTCQfluencyCrossWalk (NULL if no cover letter)' }),
-      col('cover_letter_auto_approve', 'BOOLEAN', { description: 'IsAutoApproval from legacy CQFluency config (default false)' }),
-      col('enclosure_language_code', 'VARCHAR(10)', { description: 'Language for NDN/MLI enclosures — may differ from member language (e.g. EN01SP01 for bilingual)' }),
+      col('routing_type', 'VARCHAR(20)', { description: 'bilingual | dedicated' }),
+      col('chapter_label_language', 'VARCHAR(10)', { description: 'Which language(s) to load from chapter_translation. bilingual = EN01+SP01; dedicated = same as member_language_code' }),
+      col('enclosure_language_code', 'VARCHAR(10)', { description: 'Language for NDN/MLI enclosures from book_enclosure. bilingual = EN01SP01; dedicated = member language' }),
       col('is_active', 'BOOLEAN'),
       col('created_at', 'TIMESTAMPTZ'),
       col('updated_at', 'TIMESTAMPTZ'),
