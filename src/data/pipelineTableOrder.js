@@ -58,6 +58,7 @@ const PIPELINE_TABLES = [
   { id: 'book_geography', phase: 'tenant_setup' },
   { id: 'book_chapter', phase: 'tenant_setup' },
   { id: 'book_enclosure', phase: 'tenant_setup' },
+  { id: 'language_routing_rule', phase: 'tenant_setup' },
   { id: 'output_config', phase: 'tenant_setup' },
   { id: 'output_response_template', phase: 'tenant_setup' },
   { id: 'api_client', phase: 'tenant_setup' },

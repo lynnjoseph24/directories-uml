@@ -1073,6 +1073,38 @@ const GENERATORS = {
         ordinal: ci + 1,
       }))
     ),
+  // Real enclosure data from PY2025.RdEnclosures — NDN / MLI PDFs per book language
+  book_enclosure: () =>
+    BSCA_ENCLOSURES.map((e, i) => ({
+      id: bscaUuid(1200 + i),
+      book_id: bscaUuid(1130 + (i % BSCA_BOOKS.length)),
+      tenant_id: BSCA_IDS.tenant,
+      enclosure_type: e.type,
+      label: e.label,
+      language_code: e.language,
+      resource_name: e.name,
+      resource_path: `\\\\odsbscastoragedev\\enclosures\\${e.language}\\${e.name}.pdf`,
+      sequence: e.seq,
+      plan_year: 2026,
+      is_active: true,
+    })),
+  // BSCA language routing rules — 4 products showing all 3 routing patterns
+  language_routing_rule: () => [
+    // ── IMAPDHMO: Bilingual EN01SP01 product ──
+    // EN/SP → bilingual_only (get bilingual book, no cover letter)
+    { id: bscaUuid(1250), product_plan_year_id: BSCA_IDS.ppyImapd2026, member_language_code: 'EN01', book_id: bscaUuid(1130), routing_type: 'bilingual_only', cover_letter_language_id: null, cover_letter_template: null, cover_letter_auto_approve: false, enclosure_language_code: 'EN01SP01', is_active: true, created_at: '2026-01-15T00:00:00Z', updated_at: '2026-01-15T00:00:00Z' },
+    { id: bscaUuid(1251), product_plan_year_id: BSCA_IDS.ppyImapd2026, member_language_code: 'SP01', book_id: bscaUuid(1130), routing_type: 'bilingual_only', cover_letter_language_id: null, cover_letter_template: null, cover_letter_auto_approve: false, enclosure_language_code: 'EN01SP01', is_active: true, created_at: '2026-01-15T00:00:00Z', updated_at: '2026-01-15T00:00:00Z' },
+    // KO/VI/AR/AM/CH04 → bilingual_with_cover (bilingual book + CQFluency cover letter)
+    { id: bscaUuid(1252), product_plan_year_id: BSCA_IDS.ppyImapd2026, member_language_code: 'KO01', book_id: bscaUuid(1130), routing_type: 'bilingual_with_cover', cover_letter_language_id: BSCA_IDS.langKo, cover_letter_template: 'IMAPDHMO_KO01_Cover', cover_letter_auto_approve: false, enclosure_language_code: 'EN01SP01', is_active: true, created_at: '2026-01-15T00:00:00Z', updated_at: '2026-01-15T00:00:00Z' },
+    { id: bscaUuid(1253), product_plan_year_id: BSCA_IDS.ppyImapd2026, member_language_code: 'VI01', book_id: bscaUuid(1130), routing_type: 'bilingual_with_cover', cover_letter_language_id: BSCA_IDS.langVi, cover_letter_template: 'IMAPDHMO_VI01_Cover', cover_letter_auto_approve: false, enclosure_language_code: 'EN01SP01', is_active: true, created_at: '2026-01-15T00:00:00Z', updated_at: '2026-01-15T00:00:00Z' },
+    { id: bscaUuid(1254), product_plan_year_id: BSCA_IDS.ppyImapd2026, member_language_code: 'AR01', book_id: bscaUuid(1130), routing_type: 'bilingual_with_cover', cover_letter_language_id: BSCA_IDS.langAr, cover_letter_template: 'IMAPDHMO_AR01_Cover', cover_letter_auto_approve: false, enclosure_language_code: 'EN01SP01', is_active: true, created_at: '2026-01-15T00:00:00Z', updated_at: '2026-01-15T00:00:00Z' },
+    { id: bscaUuid(1255), product_plan_year_id: BSCA_IDS.ppyImapd2026, member_language_code: 'AM01', book_id: bscaUuid(1130), routing_type: 'bilingual_with_cover', cover_letter_language_id: BSCA_IDS.langHy, cover_letter_template: 'IMAPDHMO_AM01_Cover', cover_letter_auto_approve: false, enclosure_language_code: 'EN01SP01', is_active: true, created_at: '2026-01-15T00:00:00Z', updated_at: '2026-01-15T00:00:00Z' },
+    { id: bscaUuid(1256), product_plan_year_id: BSCA_IDS.ppyImapd2026, member_language_code: 'CH04', book_id: bscaUuid(1130), routing_type: 'bilingual_with_cover', cover_letter_language_id: BSCA_IDS.langZhHans, cover_letter_template: 'IMAPDHMO_CH04_Cover', cover_letter_auto_approve: false, enclosure_language_code: 'EN01SP01', is_active: true, created_at: '2026-01-15T00:00:00Z', updated_at: '2026-01-15T00:00:00Z' },
+    { id: bscaUuid(1257), product_plan_year_id: BSCA_IDS.ppyImapd2026, member_language_code: 'FA01', book_id: bscaUuid(1130), routing_type: 'bilingual_with_cover', cover_letter_language_id: BSCA_IDS.langFa, cover_letter_template: 'IMAPDHMO_FA01_Cover', cover_letter_auto_approve: false, enclosure_language_code: 'EN01SP01', is_active: true, created_at: '2026-01-15T00:00:00Z', updated_at: '2026-01-15T00:00:00Z' },
+    { id: bscaUuid(1258), product_plan_year_id: BSCA_IDS.ppyImapd2026, member_language_code: 'RU01', book_id: bscaUuid(1130), routing_type: 'bilingual_with_cover', cover_letter_language_id: BSCA_IDS.langRu, cover_letter_template: 'IMAPDHMO_RU01_Cover', cover_letter_auto_approve: false, enclosure_language_code: 'EN01SP01', is_active: true, created_at: '2026-01-15T00:00:00Z', updated_at: '2026-01-15T00:00:00Z' },
+    { id: bscaUuid(1259), product_plan_year_id: BSCA_IDS.ppyImapd2026, member_language_code: 'TG01', book_id: bscaUuid(1130), routing_type: 'bilingual_with_cover', cover_letter_language_id: BSCA_IDS.langTl, cover_letter_template: 'IMAPDHMO_TG01_Cover', cover_letter_auto_approve: false, enclosure_language_code: 'EN01SP01', is_active: true, created_at: '2026-01-15T00:00:00Z', updated_at: '2026-01-15T00:00:00Z' },
+    { id: bscaUuid(1260), product_plan_year_id: BSCA_IDS.ppyImapd2026, member_language_code: 'KH01', book_id: bscaUuid(1130), routing_type: 'bilingual_with_cover', cover_letter_language_id: BSCA_IDS.langKm, cover_letter_template: 'IMAPDHMO_KH01_Cover', cover_letter_auto_approve: false, enclosure_language_code: 'EN01SP01', is_active: true, created_at: '2026-01-15T00:00:00Z', updated_at: '2026-01-15T00:00:00Z' },
+  ],
   provider_spatial_index: () => [
     {
       id: bscaUuid(1182),
